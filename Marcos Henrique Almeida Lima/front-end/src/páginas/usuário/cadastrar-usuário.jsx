@@ -91,19 +91,27 @@ function limparOcultar() {
 setConfirmaçãoUsuário(null);
 setMostrarModalConfirmação(false);
 };
+
 async function validarConfirmarCriação() {
-const camposVálidos = validarCampos();
-if (camposVálidos) {
-let response;
-try {
-response = await serviçoVerificarCpfExistente(dados.cpf);
-if (response) confirmarOperação("salvar");
-} catch (error) {
-if (error.response.data.erro)
-mostrarToast(referênciaToast, error.response.data.erro, "erro");
+  const camposVálidos = validarCampos();
+  if (camposVálidos) {
+    let response;
+    try {
+      response = await serviçoVerificarCpfExistente(dados.cpf);
+      if (response) confirmarOperação("salvar");
+    } catch (error) {
+      if (error.response?.data?.erro) {
+        mostrarToast(referênciaToast, error.response.data.erro, "erro");
+      } else {
+        mostrarToast(referênciaToast, "Ocorreu um erro de comunicação com o servidor. Tente novamente.", "erro");
+      }
+    }
+  }
 }
-}
-}
+
+
+
+
 function confirmarOperação(operação) {
 setConfirmaçãoUsuário({ ...dados, operação });
 setMostrarModalConfirmação(true);

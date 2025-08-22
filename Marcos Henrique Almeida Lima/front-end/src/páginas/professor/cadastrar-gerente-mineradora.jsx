@@ -50,8 +50,11 @@ setUsuárioLogado(usuário => ({ ...usuário, status: response.data.status,
 token: response.data.token }));
 mostrarToast(referênciaToast, "Gerente de Mineração cadastrado com sucesso!", "sucesso");
 } catch (error) {
+// Apenas define cpfExistente como true se a mensagem de erro for sobre CPF já cadastrado
+if (error.response?.data?.erro?.includes("CPF já cadastrado")) {
 setCpfExistente(true);
-mostrarToast(referênciaToast, error.response.data.erro, "erro");
+}
+mostrarToast(referênciaToast, error.response?.data?.erro || "Erro desconhecido.", "erro");
 }
 }
 };
