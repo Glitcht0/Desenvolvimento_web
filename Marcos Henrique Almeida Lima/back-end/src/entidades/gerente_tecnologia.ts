@@ -1,7 +1,7 @@
 import { BaseEntity, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn }
 from "typeorm";
 import Usuário from "./usuário";
-import Interesse from "./interesse";
+import Interesse from "./patrocinio";
 export enum Curso { EC = "Engenharia de Computação", SI = "Sistemas de Informação" };
 @Entity()
 export default class Aluno extends BaseEntity {

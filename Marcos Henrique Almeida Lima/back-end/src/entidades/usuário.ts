@@ -1,6 +1,6 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, OneToOne, PrimaryColumn } from "typeorm";
-import Professor from "./professor";
-import Aluno from "./aluno";
+import Professor from "./gerente_mineradora";
+import Aluno from "./gerente_tecnologia";
 export enum Perfil { ALUNO = "aluno", PROFESSOR = "professor" };
 export enum Status { PENDENTE = "pendente", ATIVO = "ativo" };
 

@@ -9,7 +9,7 @@ import { InputNumber } from "primereact/inputnumber";
 import { Toast } from "primereact/toast";
 import ContextoUsuário from "../../contextos/contexto-usuário";
 import { serviçoCadastrarProfessor, serviçoBuscarProfessor }
-from "../../serviços/serviços-professor";
+from "../../serviços/serviços-gerente-mineradora";
 import mostrarToast from "../../utilitários/mostrar-toast";
 import { MostrarMensagemErro, checarListaVazia, validarCamposObrigatórios }
 from "../../utilitários/validações";
@@ -38,8 +38,8 @@ setErros(errosCamposObrigatórios);
 return checarListaVazia(errosCamposObrigatórios);
 };
 function títuloFormulário() {
-if (usuárioLogado?.cadastrado) return "Consultar Professor";
-else return "Cadastrar Professor";
+if (usuárioLogado?.cadastrado) return "Consultar Gerente de Mineradora";
+else return "Cadastrar Gerente de Mineradora";
 };
 async function cadastrarProfessor() {
 if (validarCampos()) {
@@ -50,7 +50,7 @@ anos_experiência_empresarial: dados.anos_experiência_empresarial });
 if (response.data)
 setUsuárioLogado(usuário => ({ ...usuário, status: response.data.status,
 token: response.data.token }));
-mostrarToast(referênciaToast, "Professor cadastrado com sucesso!", "sucesso");
+mostrarToast(referênciaToast, "Gerente de Mineradora cadastrado com sucesso!", "sucesso");
 } catch (error) {
 setCpfExistente(true);
 mostrarToast(referênciaToast, error.response.data.erro, "erro");

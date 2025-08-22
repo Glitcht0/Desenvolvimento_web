@@ -1,7 +1,7 @@
 import md5 from "md5";
 import { getManager } from "typeorm";
 import Usuário, { Status } from "../entidades/usuário";
-import Professor from "../entidades/professor";
+import Professor from "../entidades/gerente_mineradora";
 import ServiçosUsuário from "./serviços-usuário";
 
 export default class ServiçosProfessor {

@@ -1,7 +1,7 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from
 "typeorm";
-import Aluno from "./aluno";
-import Proposta from "./proposta";
+import Aluno from "./gerente_tecnologia";
+import Proposta from "./participacao_mineracao";
 @Entity()
 export default class Interesse extends BaseEntity {
 @PrimaryGeneratedColumn()

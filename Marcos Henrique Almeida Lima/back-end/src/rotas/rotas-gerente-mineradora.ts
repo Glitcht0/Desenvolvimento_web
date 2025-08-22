@@ -1,7 +1,7 @@
 import { Router } from "express";
 import verificarToken from "../middlewares/verificar-token";
 import verificarPerfilProfessor from "../middlewares/verificar-perfil-professor";
-import ServiçosProfessor from "../serviços/serviços-professor";
+import ServiçosProfessor from "../serviços/serviços-gerente-mineradora";
 const RotasProfessor = Router();
 export default RotasProfessor;
 RotasProfessor.post("/", ServiçosProfessor.cadastrarProfessor);
