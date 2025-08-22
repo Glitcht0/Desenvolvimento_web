@@ -1,3 +1,4 @@
+
 import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "primereact/button";
@@ -7,15 +8,16 @@ import { Dropdown } from "primereact/dropdown";
 import { InputNumber } from "primereact/inputnumber";
 import { Toast } from "primereact/toast";
 import ContextoUsuário from "../../contextos/contexto-usuário";
-import { serviçoCadastrarGerenteMineradora, serviçoBuscarGerenteMineradora }
-from "../../serviços/serviços-gerente-mineradora";
+import { serviçoCadastrarProfessor, serviçoBuscarProfessor }
+from "../../serviços/serviços-professor";
 import mostrarToast from "../../utilitários/mostrar-toast";
 import { MostrarMensagemErro, checarListaVazia, validarCamposObrigatórios }
 from "../../utilitários/validações";
+
 import {estilizarBotão, estilizarBotãoRetornar, estilizarCard, estilizarDivCampo, estilizarDivider,
 estilizarDropdown, estilizarFlex, estilizarInlineFlex, estilizarInputNumber, estilizarLabel }
 from "../../utilitários/estilos";
-export default function CadastrarGerenteMineradora() {
+export default function CadastrarProfessor() {
 const referênciaToast = useRef(null);
 const { usuárioLogado, setUsuárioLogado } = useContext(ContextoUsuário);
 const [dados, setDados] = useState({ titulação: "", anos_experiência_empresarial: "" });
@@ -36,35 +38,38 @@ setErros(errosCamposObrigatórios);
 return checarListaVazia(errosCamposObrigatórios);
 };
 function títuloFormulário() {
-if (usuárioLogado?.cadastrado) return "Consultar Gerente Mineradora";
-else return "Cadastrar Gerente Mineradora";
+if (usuárioLogado?.cadastrado) return "Consultar Empresa mineradora";
+else return "Cadastrar Empresa mineradora";
 };
-async function cadastrarGerenteMineradora() {
+
+
+async function cadastrarProfessor() {
 if (validarCampos()) {
 try {
-const response = await serviçoCadastrarGerenteMineradora({ ...dados, usuário_info: usuárioLogado,
+const response = await serviçoCadastrarProfessor({ ...dados, usuário_info: usuárioLogado,
 titulação: dados.titulação,
 anos_experiência_empresarial: dados.anos_experiência_empresarial });
 if (response.data)
 setUsuárioLogado(usuário => ({ ...usuário, status: response.data.status,
 token: response.data.token }));
-mostrarToast(referênciaToast, "Gerente de Mineração cadastrado com sucesso!", "sucesso");
+mostrarToast(referênciaToast, "Empresa mineradora cadastrado com sucesso!", "sucesso");
 } catch (error) {
-// Apenas define cpfExistente como true se a mensagem de erro for sobre CPF já cadastrado
-if (error.response?.data?.erro?.includes("CPF já cadastrado")) {
 setCpfExistente(true);
-}
-mostrarToast(referênciaToast, error.response?.data?.erro || "Erro desconhecido.", "erro");
+mostrarToast(referênciaToast, error.response.data.erro, "erro");
 }
 }
 };
+
+
+
 function labelBotãoSalvar() {
 if (usuárioLogado?.cadastrado) return "Consultar";
 else return "Cadastrar";
 };
 function açãoBotãoSalvar() {
-if (!usuárioLogado?.cadastrado) cadastrarGerenteMineradora();
+if (!usuárioLogado?.cadastrado) cadastrarProfessor();
 };
+
 function redirecionar() {
 if (cpfExistente) {
 setUsuárioLogado(null);
@@ -74,11 +79,14 @@ setUsuárioLogado(usuárioLogado => ({ ...usuárioLogado, cadastrado: true }));
 navegar("/pagina-inicial");
 }
 };
+
+
+
 useEffect(() => {
 let desmontado = false;
-async function buscarDadosGerenteMineradora() {
+async function buscarDadosProfessor() {
 try {
-const response = await serviçoBuscarGerenteMineradora(usuárioLogado.cpf);
+const response = await serviçoBuscarProfessor(usuárioLogado.cpf);
 if (!desmontado && response.data) {
 setDados(dados => ({ ...dados, titulação: response.data.titulação,
 anos_experiência_empresarial: response.data.anos_experiência_empresarial }));
@@ -88,7 +96,13 @@ const erro = error.response.data.erro;
 if (erro) mostrarToast(referênciaToast, erro, "erro");
 }
 }
-if (usuárioLogado?.cadastrado) buscarDadosGerenteMineradora();
+
+
+
+
+
+
+if (usuárioLogado?.cadastrado) buscarDadosProfessor();
 return () => desmontado = true;
 }, [usuárioLogado?.cadastrado, usuárioLogado.cpf]);
 return (
@@ -100,6 +114,7 @@ return (
 <Dropdown name="titulação"
 className={estilizarDropdown(erros.titulação, usuárioLogado.cor_tema)}
 value={dados.titulação} options={opçõesTitulação} onChange={alterarEstado}
+
 placeholder="-- Selecione --"/>
 <MostrarMensagemErro mensagem={erros.titulação}/>
 </div>
@@ -110,6 +125,7 @@ Anos de Experiência Empresarial*:</label>
 value={dados.anos_experiência_empresarial}
 onValueChange={alterarEstado} mode="decimal"
 inputClassName={estilizarInputNumber(erros.anos_experiência_empresarial,
+
 usuárioLogado.cor_tema)}/>
 <MostrarMensagemErro mensagem={erros.anos_experiência_empresarial}/>
 </div>

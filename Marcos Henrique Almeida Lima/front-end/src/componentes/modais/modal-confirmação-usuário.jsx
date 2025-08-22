@@ -42,7 +42,7 @@ function finalizarCadastro() {
 if (dados.perfil === "professor") {
 setUsuárioLogado({ ...dados, cadastrado: false });
 setMostrarModalConfirmação(false);
-navegar("../cadastrar-gerente-mineradora");
+navegar("../cadastrar-professor");
 }
 };
 function executarOperação() {
