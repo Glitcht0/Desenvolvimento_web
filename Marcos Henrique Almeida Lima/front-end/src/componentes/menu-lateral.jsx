@@ -1,9 +1,5 @@
-
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-
-
 import { Button } from "primereact/button";
 import { Menu } from "primereact/menu";
 import { Sidebar } from "primereact/sidebar";
@@ -18,7 +14,7 @@ const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 const [visible, setVisible] = useState(false);
 const tamanhoDesktop = windowWidth > 991;
 const navegar = useNavigate();
-const opçõesProfessor = [
+const opçõesGerenteMineradora = [
 { label: "Página Inicial", command: () => navegar("/pagina-inicial") },
 { label: "Menu", items: [
 { label: "Cadastrar Usuário", command: () => navegar("/atualizar-usuario"),
@@ -27,15 +23,15 @@ disabled: usuárioLogado.status !== "ativo"},
 { label: "Sair do Sistema", command: () => sairSistema()}
 ]},
 ];
-const opçõesAluno = [];
+const opçõesGerenteTecnologia = [];
 function sairSistema() {
 setUsuárioLogado({});
 navegar("/");
 };
 function opçõesMenu() {
 switch (usuárioLogado.perfil) {
-case "professor": return opçõesProfessor;
-case "aluno": return opçõesAluno;
+case "gerente_mineradora": return opçõesGerenteMineradora;
+case "gerente_tecnologia": return opçõesGerenteTecnologia;
 default: return;
 }
 };
@@ -68,8 +64,6 @@ onHide={() => setVisible(false)}showCloseIcon>
 </>
 );
 };
-
-
 useEffect(() => {
 window.addEventListener('resize', redimensionarJanela);
 return () => window.removeEventListener('resize', redimensionarJanela);

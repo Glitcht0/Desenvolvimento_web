@@ -3,8 +3,8 @@ import dotenv from 'dotenv';
 import md5 from "md5";
 import { sign } from "jsonwebtoken";
 import Usuário, { Perfil } from "../entidades/usuário";
-import Professor from "../entidades/gerente_mineradora";
-import Aluno from "../entidades/gerente_tecnologia";
+import GerenteMineradora from "../entidades/gerente_mineradora";
+import GerenteTecnologia from "../entidades/gerente_tecnologia";
 dotenv.config();
 const SALT = 10;
 const SENHA_JWT = process.env.SENHA_JWT;
@@ -20,19 +20,17 @@ else return response.json();
 return response.status(500).json({ erro: "Erro BD: verificarCpfCadastrado" });
 }
 };
-
-
 static async verificarCadastroCompleto(usuário: Usuário) {
 switch(usuário.perfil) {
-case Perfil.PROFESSOR:
-const professor = await Professor.findOne({ where: { usuário: usuário.cpf },
+case Perfil.GERENTE_MINERADORA:
+const gerente_mineradora = await GerenteMineradora.findOne({ where: { usuário: usuário.cpf },
 relations: ["usuário"] });
-if (!professor) return false;
+if (!gerente_mineradora) return false;
 return true;
-case Perfil.ALUNO:
-const aluno = await Aluno.findOne({ where: { usuário: usuário.cpf },
+case Perfil.GERENTE_TECNOLOGIA:
+const gerente_tecnologia = await GerenteTecnologia.findOne({ where: { usuário: usuário.cpf },
 relations: ["usuário"] });
-if (!aluno) return false;
+if (!gerente_tecnologia) return false;
 return true;
 default: return;
 }

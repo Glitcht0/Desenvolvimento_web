@@ -1,9 +1,9 @@
 import { Router } from "express";
 import verificarToken from "../middlewares/verificar-token";
-import verificarPerfilProfessor from "../middlewares/verificar-perfil-professor";
-import ServiçosProfessor from "../serviços/serviços-gerente-mineradora";
-const RotasProfessor = Router();
-export default RotasProfessor;
-RotasProfessor.post("/", ServiçosProfessor.cadastrarProfessor);
-RotasProfessor.get("/:cpf", verificarToken, verificarPerfilProfessor,
-ServiçosProfessor.buscarProfessor);
+import verificarPerfilGerenteMineradora from "../middlewares/verificar-perfil-gerente-mineradora";
+import ServiçosGerenteMineradora from "../serviços/serviços-gerente-mineradora";
+const RotasGerenteMineradora = Router();
+export default RotasGerenteMineradora;
+RotasGerenteMineradora.post("/", ServiçosGerenteMineradora.cadastrarGerenteMineradora);
+RotasGerenteMineradora.get("/:cpf", verificarToken, verificarPerfilGerenteMineradora,
+ServiçosGerenteMineradora.buscarGerenteMineradora);

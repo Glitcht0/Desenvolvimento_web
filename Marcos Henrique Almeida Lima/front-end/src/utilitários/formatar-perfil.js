@@ -1,8 +1,7 @@
-
 export default function formatarPerfil(perfil) {
 switch(perfil) {
-case "professor": return "Professor";
-case "aluno": return "Aluno";
+case "gerente_mineradora": return "Gerente Mineradora";
+case "gerente_tecnologia": return "Gerente Tecnologia";
 default: return;
 }
 };
