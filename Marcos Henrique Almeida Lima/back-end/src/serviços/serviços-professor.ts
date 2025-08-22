@@ -1,7 +1,7 @@
 import md5 from "md5";
 import { getManager } from "typeorm";
 import Usuário, { Status } from "../entidades/usuário";
-import Professor from "../entidades/gerente_mineradora";
+import GerenteMineradora from "../entidades/gerente_mineradora";
 import ServiçosUsuário from "./serviços-usuário";
 
 export default class ServiçosProfessor {
@@ -15,7 +15,7 @@ export default class ServiçosProfessor {
 
       await entityManager.transaction(async (transactionManager) => {
         await transactionManager.save(usuário);
-        const professor = Professor.create({ usuário, titulação, anos_experiência_empresarial });
+        const professor = GerenteMineradora.create({ usuário, titulação, anos_experiência_empresarial });
         await transactionManager.save(professor);
         await transactionManager.update(Usuário, usuário.cpf, { status: Status.ATIVO });
       });
@@ -29,10 +29,10 @@ export default class ServiçosProfessor {
   static async buscarProfessor(request, response) {
     try {
       const cpf_encriptado = md5(request.params.cpf);
-      const professor = await Professor.findOne({ where: { usuário: cpf_encriptado }, relations: ["usuário"] });
+      const professor = await GerenteMineradora.findOne({ where: { usuário: cpf_encriptado }, relations: ["usuário"] });
 
       if (!professor) {
-        return response.status(404).json({ erro: "Professor não encontrado." });
+        return response.status(404).json({ erro: "GerenteMineradora não encontrado." });
       }
 
       // O erro estava na linha abaixo, faltando uma propriedade ou tendo uma vírgula extra.

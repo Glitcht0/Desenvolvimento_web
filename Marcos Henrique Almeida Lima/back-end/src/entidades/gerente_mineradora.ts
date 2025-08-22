@@ -4,7 +4,7 @@ import Usuário from "./usuário";
 import Proposta from "./participacao_mineracao";
 export enum Titulação {MESTRADO = "mestrado", DOUTORADO = "doutorado"};
 @Entity()
-export default class Professor extends BaseEntity {
+export default class GerenteMineradora extends BaseEntity {
 @PrimaryGeneratedColumn()
 id: number;
 @Column({ type: "enum", enum: Titulação })

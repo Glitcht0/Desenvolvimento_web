@@ -26,7 +26,7 @@ default: return;
 };
 function exibirPerfilFormatado() {
 switch (dados.perfil) {
-case "professor": return "Professor";
+case "professor": return "GerenteMineradora";
 default: return "";
 }
 };

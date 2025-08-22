@@ -1,5 +1,5 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, OneToOne, PrimaryColumn } from "typeorm";
-import Professor from "./gerente_mineradora";
+import GerenteMineradora from "./gerente_mineradora";
 import Aluno from "./gerente_tecnologia";
 export enum Perfil { ALUNO = "aluno", PROFESSOR = "professor" };
 export enum Status { PENDENTE = "pendente", ATIVO = "ativo" };
@@ -27,8 +27,8 @@ questão: string;
 resposta: string;
 @Column({ type: "enum", enum: Cores })
 cor_tema: string;
-@OneToOne(() => Professor, (professor) => professor.usuário)
-professor: Professor;
+@OneToOne(() => GerenteMineradora, (professor) => professor.usuário)
+professor: GerenteMineradora;
 @OneToOne(() => Aluno, (aluno) => aluno.usuário)
 aluno: Aluno;
 @CreateDateColumn()

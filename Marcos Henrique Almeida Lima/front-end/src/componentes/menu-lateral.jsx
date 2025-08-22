@@ -23,7 +23,7 @@ const opçõesProfessor = [
 { label: "Menu", items: [
 { label: "Cadastrar Usuário", command: () => navegar("/atualizar-usuario"),
 disabled: usuárioLogado.status !== "ativo"},
-{ label: "Cadastrar Professor", command: () => navegar("/cadastrar-empresa-mineradora")},
+{ label: "Cadastrar GerenteMineradora", command: () => navegar("/cadastrar-empresa-mineradora")},
 { label: "Sair do Sistema", command: () => sairSistema()}
 ]},
 ];

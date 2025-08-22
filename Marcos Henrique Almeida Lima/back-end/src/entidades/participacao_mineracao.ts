@@ -1,5 +1,5 @@
 import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import Professor from "./gerente_mineradora";
+import GerenteMineradora from "./gerente_mineradora";
 import Interesse from "./patrocinio";
 export enum Categoria { EXTENSÃO = "Extensão", IC = "Iniciação Científica", TCC = "TCC" };
 export enum Resultado { ARTIGO = "artigo", DESENVOLVIMENTO = "desenvolvimento", MONOGRAFIA =
@@ -23,8 +23,8 @@ descrição: string;
 concorrendo_bolsa: boolean;
 @Column({ type: "enum", enum: Resultado })
 resultado: Resultado;
-@ManyToOne(() => Professor, (professor) => professor.propostas, { onDelete: "CASCADE" })
-professor: Professor;
+@ManyToOne(() => GerenteMineradora, (professor) => professor.propostas, { onDelete: "CASCADE" })
+professor: GerenteMineradora;
 @OneToMany(() => Interesse, (interesse) => interesse.proposta)
 interesses: Interesse[];
 }
