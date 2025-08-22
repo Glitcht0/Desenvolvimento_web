@@ -23,8 +23,8 @@ descrição: string;
 concorrendo_bolsa: boolean;
 @Column({ type: "enum", enum: Resultado })
 resultado: Resultado;
-@ManyToOne(() => GerenteMineradora, (professor) => professor.propostas, { onDelete: "CASCADE" })
-professor: GerenteMineradora;
+@ManyToOne(() => GerenteMineradora, (gerentemineradora) => gerentemineradora.propostas, { onDelete: "CASCADE" })
+gerentemineradora: GerenteMineradora;
 @OneToMany(() => Interesse, (interesse) => interesse.proposta)
 interesses: Interesse[];
 }

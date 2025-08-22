@@ -11,9 +11,9 @@ id: number;
 titulação: Titulação;
 @Column()
 anos_experiência_empresarial: number;
-@OneToMany(() => Proposta, (proposta) => proposta.professor)
+@OneToMany(() => Proposta, (proposta) => proposta.gerentemineradora)
 propostas: Proposta[];
-@OneToOne(() => Usuário, (usuário) => usuário.professor, { onDelete: "CASCADE" })
+@OneToOne(() => Usuário, (usuário) => usuário.gerentemineradora, { onDelete: "CASCADE" })
 @JoinColumn()
 
 

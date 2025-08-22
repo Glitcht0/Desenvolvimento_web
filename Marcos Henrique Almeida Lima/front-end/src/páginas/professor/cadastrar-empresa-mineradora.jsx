@@ -9,7 +9,7 @@ import { InputNumber } from "primereact/inputnumber";
 import { Toast } from "primereact/toast";
 import ContextoUsuário from "../../contextos/contexto-usuário";
 import { serviçoCadastrarProfessor, serviçoBuscarProfessor }
-from "../../serviços/serviços-professor";
+from "../../serviços/serviços-gerente-mineradora";
 import mostrarToast from "../../utilitários/mostrar-toast";
 import { MostrarMensagemErro, checarListaVazia, validarCamposObrigatórios }
 from "../../utilitários/validações";

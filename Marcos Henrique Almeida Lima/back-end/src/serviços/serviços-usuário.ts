@@ -24,7 +24,7 @@ return response.status(500).json({ erro: "Erro BD: verificarCpfCadastrado" });
 
 static async verificarCadastroCompleto(usuário: Usuário) {
 switch(usuário.perfil) {
-case Perfil.PROFESSOR:
+case Perfil.GERENTEMINERADORA:
 const professor = await GerenteMineradora.findOne({ where: { usuário: usuário.cpf },
 relations: ["usuário"] });
 if (!professor) return false;
