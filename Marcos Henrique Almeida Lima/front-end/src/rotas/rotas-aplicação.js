@@ -4,7 +4,7 @@ import LogarUsuário from "../páginas/usuário/logar-usuário";
 import CadastrarUsuário from "../páginas/usuário/cadastrar-usuário";
 import PáginaInicial from "../páginas/usuário/página-inicial";
 import CadastrarProfessor from "../páginas/professor/cadastrar-professor";
-export default function RotasAplicação() {
+export default function Rotas() {
 return (
 <BrowserRouter>
 <Routes>
