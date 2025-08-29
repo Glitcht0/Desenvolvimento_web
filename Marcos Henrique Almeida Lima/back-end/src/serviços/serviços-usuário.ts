@@ -4,7 +4,7 @@ import md5 from "md5";
 import { sign } from "jsonwebtoken";
 import Usuário, { Perfil } from "../entidades/usuário";
 import GerenteMineradora from "../entidades/gerente_mineradora";
-import Aluno from "../entidades/gerente_tecnologia";
+import gerentetecnologia from "../entidades/gerente_tecnologia";
 dotenv.config();
 const SALT = 10;
 const SENHA_JWT = process.env.SENHA_JWT;
@@ -29,10 +29,10 @@ const gerentemineradora = await GerenteMineradora.findOne({ where: { usuário: u
 relations: ["usuário"] });
 if (!gerentemineradora) return false;
 return true;
-case Perfil.ALUNO:
-const aluno = await Aluno.findOne({ where: { usuário: usuário.cpf },
+case Perfil.GERENTETECNOLOGIA:
+const gerenteTecnologia = await gerentetecnologia.findOne({ where: { usuário: usuário.cpf },
 relations: ["usuário"] });
-if (!aluno) return false;
+if (!gerenteTecnologia) return false;
 return true;
 default: return;
 }

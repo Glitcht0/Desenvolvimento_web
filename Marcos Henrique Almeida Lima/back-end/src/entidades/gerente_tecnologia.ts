@@ -4,7 +4,7 @@ import Usuário from "./usuário";
 import Interesse from "./patrocinio";
 export enum Curso { EC = "Engenharia de Computação", SI = "Sistemas de Informação" };
 @Entity()
-export default class Aluno extends BaseEntity {
+export default class gerentetecnologia extends BaseEntity {
 @PrimaryGeneratedColumn()
 id: number;
 @Column({ type: "enum", enum: Curso })
@@ -15,9 +15,9 @@ ano_ingresso: number;
 data_nascimento: Date;
 @Column()
 telefone: string;
-@OneToMany(() => Interesse, (interesse) => interesse.aluno)
+@OneToMany(() => Interesse, (interesse) => interesse.gerentetecnologia)
 interesses: Interesse[];
-@OneToOne(() => Usuário, usuário => usuário.aluno, { onDelete: "CASCADE" })
+@OneToOne(() => Usuário, usuário => usuário.gerentetecnologia, { onDelete: "CASCADE" })
 @JoinColumn()
 usuário: Usuário;
 }

@@ -27,7 +27,7 @@ disabled: usuárioLogado.status !== "ativo"},
 { label: "Sair do Sistema", command: () => sairSistema()}
 ]},
 ];
-const opçõesAluno = [];
+const opçõesgerentetecnologia = [];
 function sairSistema() {
 setUsuárioLogado({});
 navegar("/");
@@ -35,7 +35,7 @@ navegar("/");
 function opçõesMenu() {
 switch (usuárioLogado.perfil) {
 case "professor": return opçõesgerentemineradora;
-case "aluno": return opçõesAluno;
+case "aluno": return opçõesgerentetecnologia;
 default: return;
 }
 };

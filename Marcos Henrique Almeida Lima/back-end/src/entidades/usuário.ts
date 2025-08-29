@@ -1,7 +1,7 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, OneToOne, PrimaryColumn } from "typeorm";
 import GerenteMineradora from "./gerente_mineradora";
-import Aluno from "./gerente_tecnologia";
-export enum Perfil { ALUNO = "aluno", GERENTEMINERADORA = "professor" };
+import gerentetecnologia from "./gerente_tecnologia";
+export enum Perfil { GERENTETECNOLOGIA = "aluno", GERENTEMINERADORA = "professor" };
 export enum Status { PENDENTE = "pendente", ATIVO = "ativo" };
 
 export enum Cores { AMARELO = "yellow", ANIL = "indigo", AZUL = "blue", AZUL_PISCINA = "cyan",
@@ -29,8 +29,8 @@ resposta: string;
 cor_tema: string;
 @OneToOne(() => GerenteMineradora, (gerentemineradora) => gerentemineradora.usuário)
 gerentemineradora: GerenteMineradora;
-@OneToOne(() => Aluno, (aluno) => aluno.usuário)
-aluno: Aluno;
+@OneToOne(() => gerentetecnologia, (gerentetecnologia) => gerentetecnologia.usuário)
+gerentetecnologia: gerentetecnologia;
 @CreateDateColumn()
 dzata_criação: Date;
 }
