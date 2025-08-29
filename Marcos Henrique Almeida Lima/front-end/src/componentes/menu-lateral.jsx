@@ -18,7 +18,7 @@ const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 const [visible, setVisible] = useState(false);
 const tamanhoDesktop = windowWidth > 991;
 const navegar = useNavigate();
-const opçõesProfessor = [
+const opçõesgerentemineradora = [
 { label: "Página Inicial", command: () => navegar("/pagina-inicial") },
 { label: "Menu", items: [
 { label: "Cadastrar Usuário", command: () => navegar("/atualizar-usuario"),
@@ -34,7 +34,7 @@ navegar("/");
 };
 function opçõesMenu() {
 switch (usuárioLogado.perfil) {
-case "professor": return opçõesProfessor;
+case "professor": return opçõesgerentemineradora;
 case "aluno": return opçõesAluno;
 default: return;
 }

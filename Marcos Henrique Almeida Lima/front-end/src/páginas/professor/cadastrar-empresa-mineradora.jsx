@@ -8,7 +8,7 @@ import { Dropdown } from "primereact/dropdown";
 import { InputNumber } from "primereact/inputnumber";
 import { Toast } from "primereact/toast";
 import ContextoUsuário from "../../contextos/contexto-usuário";
-import { serviçoCadastrarProfessor, serviçoBuscarProfessor }
+import { serviçoCadastrarProfessor as serviçoCadastrargerentemineradora, serviçoBuscarProfessor as serviçoBuscargerentemineradora }
 from "../../serviços/serviços-gerente-mineradora";
 import mostrarToast from "../../utilitários/mostrar-toast";
 import { MostrarMensagemErro, checarListaVazia, validarCamposObrigatórios }
@@ -17,7 +17,7 @@ from "../../utilitários/validações";
 import {estilizarBotão, estilizarBotãoRetornar, estilizarCard, estilizarDivCampo, estilizarDivider,
 estilizarDropdown, estilizarFlex, estilizarInlineFlex, estilizarInputNumber, estilizarLabel }
 from "../../utilitários/estilos";
-export default function CadastrarProfessor() {
+export default function Cadastrargerentemineradora() {
 const referênciaToast = useRef(null);
 const { usuárioLogado, setUsuárioLogado } = useContext(ContextoUsuário);
 const [dados, setDados] = useState({ titulação: "", anos_experiência_empresarial: "" });
@@ -43,10 +43,10 @@ else return "Cadastrar Empresa mineradora";
 };
 
 
-async function cadastrarProfessor() {
+async function cadastrargerentemineradora() {
 if (validarCampos()) {
 try {
-const response = await serviçoCadastrarProfessor({ ...dados, usuário_info: usuárioLogado,
+const response = await serviçoCadastrargerentemineradora({ ...dados, usuário_info: usuárioLogado,
 titulação: dados.titulação,
 anos_experiência_empresarial: dados.anos_experiência_empresarial });
 if (response.data)
@@ -67,7 +67,7 @@ if (usuárioLogado?.cadastrado) return "Consultar";
 else return "Cadastrar";
 };
 function açãoBotãoSalvar() {
-if (!usuárioLogado?.cadastrado) cadastrarProfessor();
+if (!usuárioLogado?.cadastrado) cadastrargerentemineradora();
 };
 
 function redirecionar() {
@@ -84,9 +84,9 @@ navegar("/pagina-inicial");
 
 useEffect(() => {
 let desmontado = false;
-async function buscarDadosProfessor() {
+async function buscarDadosgerentemineradora() {
 try {
-const response = await serviçoBuscarProfessor(usuárioLogado.cpf);
+const response = await serviçoBuscargerentemineradora(usuárioLogado.cpf);
 if (!desmontado && response.data) {
 setDados(dados => ({ ...dados, titulação: response.data.titulação,
 anos_experiência_empresarial: response.data.anos_experiência_empresarial }));
@@ -102,7 +102,7 @@ if (erro) mostrarToast(referênciaToast, erro, "erro");
 
 
 
-if (usuárioLogado?.cadastrado) buscarDadosProfessor();
+if (usuárioLogado?.cadastrado) buscarDadosgerentemineradora();
 return () => desmontado = true;
 }, [usuárioLogado?.cadastrado, usuárioLogado.cpf]);
 return (
