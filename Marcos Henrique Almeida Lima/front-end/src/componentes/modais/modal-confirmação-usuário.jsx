@@ -26,7 +26,7 @@ default: return;
 };
 function exibirPerfilFormatado() {
 switch (dados.perfil) {
-case "gerentemineradora": return "GerenteMineradora";
+case "professor": return "GerenteMineradora";
 default: return "";
 }
 };
@@ -39,10 +39,10 @@ navegar("../pagina-inicial");
 }
 };
 function finalizarCadastro() {
-if (dados.perfil === "gerentemineradora") {
-setUsuárioLogado({ ...dados, cadastrado: false });
-setMostrarModalConfirmação(false);
-navegar("../cadastrar-empresa-mineradora");
+if (dados.perfil === "professor") {
+    setUsuárioLogado({ ...dados, cadastrado: false });
+    setMostrarModalConfirmação(false);
+    navegar("../cadastrar-empresa-mineradora");
 }
 };
 function executarOperação() {

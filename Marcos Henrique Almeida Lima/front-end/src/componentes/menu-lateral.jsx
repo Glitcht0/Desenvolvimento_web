@@ -34,7 +34,7 @@ navegar("/");
 };
 function opçõesMenu() {
 switch (usuárioLogado.perfil) {
-case "gerentemineradora": return opçõesgerentemineradora;
+case "professor": return opçõesgerentemineradora;
 case "gerentetecnologia": return opçõesgerentetecnologia;
 default: return;
 }

@@ -23,8 +23,7 @@
 "postbuild": "react-snap"
 },
 "eslintConfig": {
-"extends": "react-app",
-"rules": { "no-console": "warn" }
+"extends": "react-app"
 },
 "browserslist": {
 "production": [
