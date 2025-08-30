@@ -27,10 +27,8 @@ categoria: Categoria;
 @Column({ type: "date" })
 data_início: Date;
 @Column()
-
 descrição: string;
-@Column()
-concorrendo_bolsa: boolean;
+
 @Column({ type: "enum", enum: Resultado })
 resultado: Resultado;
 @ManyToOne(() => GerenteMineradora, (gerentemineradora) => gerentemineradora.participacoes_mineracao, { onDelete: "CASCADE" })
