@@ -8,7 +8,7 @@ import { Dropdown } from "primereact/dropdown";
 import { InputNumber } from "primereact/inputnumber";
 import { Toast } from "primereact/toast";
 import ContextoUsuário from "../../contextos/contexto-usuário";
-import { serviçoCadastrarProfessor as serviçoCadastrargerentemineradora, serviçoBuscarProfessor as serviçoBuscargerentemineradora }
+import { serviçoCadastrargerentemineradora as serviçoCadastrargerentemineradora, serviçoBuscargerentemineradora as serviçoBuscargerentemineradora }
 from "../../serviços/serviços-gerente-mineradora";
 import mostrarToast from "../../utilitários/mostrar-toast";
 import { MostrarMensagemErro, checarListaVazia, validarCamposObrigatórios }
@@ -24,8 +24,10 @@ const [dados, setDados] = useState({ titulação: "", anos_experiência_empresar
 const [erros, setErros] = useState({});
 const [cpfExistente, setCpfExistente] = useState(false);
 const navegar = useNavigate();
-const opçõesTitulação = [{ label: "Mestrado", value: "mestrado" },
-{ label: "Doutorado", value: "doutorado" }];
+const opçõesTitulação = [{ label: "Diretor de Operações", value: "diretor de operações" }, 
+{ label: "Supervisor de Lavragem", value: "supervisor de lavragem" }, { label: "Coordenador de Exploração", value: "coordenador de exploração" },
+{ label: "Engenheiro de Minas", value: "engenheiro de minas" }, { label: "Técnico de Minas", value: "técnico de minas" }];
+
 function alterarEstado(event) {
 const chave = event.target.name || event.value;
 const valor = event.target.value;
