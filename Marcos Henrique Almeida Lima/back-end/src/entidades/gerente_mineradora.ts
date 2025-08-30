@@ -12,7 +12,7 @@ titulação: Titulação;
 @Column()
 anos_experiência_empresarial: number;
 @OneToMany(() => ParticipacaoMineração, (participacao) => participacao.gerentemineradora)
-participacaos: ParticipacaoMineração[];
+participacoes_mineracao: ParticipacaoMineração[];
 @OneToOne(() => Usuário, (usuário) => usuário.gerentemineradora, { onDelete: "CASCADE" })
 @JoinColumn()
 
