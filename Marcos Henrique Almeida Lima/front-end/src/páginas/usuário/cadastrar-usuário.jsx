@@ -35,7 +35,7 @@ email: usuárioLogado?.email || "", senha: "", confirmação: "",
 questão: usuárioLogado?.questão || "", resposta: "",
 cor_tema: usuárioLogado?.cor_tema || TEMA_PADRÃO });
 const [erros, setErros] = useState({});
-const opçõesPerfis = [{ label: "GerenteMineradora", value: "professor" },
+const opçõesPerfis = [{ label: "GerenteMineradora", value: "gerentemineradora" },
 { label: "Gerentetecnologia", value: "gerentetecnologia" }];
 function alterarEstado(event) {
 const chave = event.target.name;
@@ -91,19 +91,30 @@ function limparOcultar() {
 setConfirmaçãoUsuário(null);
 setMostrarModalConfirmação(false);
 };
+
 async function validarConfirmarCriação() {
-const camposVálidos = validarCampos();
-if (camposVálidos) {
-let response;
-try {
-response = await serviçoVerificarCpfExistente(dados.cpf);
-if (response) confirmarOperação("salvar");
-} catch (error) {
-if (error.response.data.erro)
-mostrarToast(referênciaToast, error.response.data.erro, "erro");
+  const camposVálidos = validarCampos();
+  if (camposVálidos) {
+    try {
+      const response = await servidor.get(`/usuarios/verificar-cpf-existente/${dados.cpf}`);
+      if (response && response.data && response.data.dados) {
+        mostrarToast(referênciaToast, "Usuário com esse CPF já existe", "erro");
+        return;
+      }
+      confirmarOperação("salvar");
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.erro) {
+        mostrarToast(referênciaToast, error.response.data.erro, "erro");
+      } else {
+        mostrarToast(referênciaToast, "Ocorreu um erro ao verificar o CPF.", "erro");
+      }
+    }
+  }
 }
-}
-}
+
+
+
+
 function confirmarOperação(operação) {
 setConfirmaçãoUsuário({ ...dados, operação });
 setMostrarModalConfirmação(true);
