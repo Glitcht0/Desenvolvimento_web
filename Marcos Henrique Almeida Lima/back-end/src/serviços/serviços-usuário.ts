@@ -9,17 +9,27 @@ dotenv.config();
 const SALT = 10;
 const SENHA_JWT = process.env.SENHA_JWT;
 export default class ServiçosUsuário {
-constructor() {}
-static async verificarCpfExistente(request, response) {
-try {
-const cpf_encriptado = md5(request.params.cpf);
-const usuário = await Usuário.findOne(cpf_encriptado);
-if (usuário) return response.status(404).json({ erro: "CPF já cadastrado." });
-else return response.json();
-} catch (error) {
-return response.status(500).json({ erro: "Erro BD: verificarCpfCadastrado" });
-}
-};
+  constructor() {}
+
+  static async verificarCpfExistente(request, response) {
+    console.log("Função verificarCpfExistente chamada. CPF recebido:", request.params.cpf);
+    try {
+      const cpf_encriptado = md5(request.params.cpf);
+      const usuário = await Usuário.findOne(cpf_encriptado);
+      console.log("Resultado da busca no banco de dados:", usuário);
+
+      if (usuário) {
+        console.log("CPF encontrado. Retornando status 200 com dados.");
+        return response.status(200).json({ dados: "CPF já cadastrado." });
+      } else {
+        console.log("CPF não encontrado. Retornando status 200 com dados nulos.");
+        return response.status(200).json({ dados: null });
+      }
+    } catch (error) {
+      console.error("Erro no serviço de verificação de CPF:", error);
+      return response.status(500).json({ erro: "Erro BD: verificarCpfCadastrado" });
+    }
+  };
 
 
 static async verificarCadastroCompleto(usuário: Usuário) {

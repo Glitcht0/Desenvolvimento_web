@@ -14,6 +14,8 @@ from "../../utilitários/validações";
 import { TAMANHOS, estilizarBotão, estilizarCard, estilizarDivCampo, estilizarFlex,
 estilizarInputMask, estilizarLabel, estilizarLink, estilizarLogo, estilizarPasswordInput,
 estilizarPasswordTextInputBorder, estilizarPáginaÚnica } from "../../utilitários/estilos";
+
+
 export default function LogarUsuário() {
 const referênciaToast = useRef(null);
 const { setUsuárioLogado } = useContext(ContextoUsuário);
@@ -25,6 +27,10 @@ const erros = validarCamposObrigatórios(dados);
 setErros(erros);
 return checarListaVazia(erros);
 };
+
+
+
+
 async function logarUsuário() {
 if (validarCampos()) {
 try {
@@ -35,6 +41,12 @@ navegar("/pagina-inicial");
 } catch (error) { mostrarToast(referênciaToast, error.response.data.erro, "error"); }
 }
 };
+
+
+
+
+
+
 function alterarEstado(event) {
 const chave = event.target.name || event.value;
 const valor = event.target.value;

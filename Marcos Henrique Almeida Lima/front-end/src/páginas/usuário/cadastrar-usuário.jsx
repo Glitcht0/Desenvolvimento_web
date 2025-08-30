@@ -16,7 +16,7 @@ import { CPF_MÁSCARA } from "../../utilitários/máscaras";
 import { MostrarMensagemErro, checarListaVazia, validarCampoEmail, validarCamposObrigatórios,
 validarConfirmaçãoSenha, validarConfirmaçãoSenhaOpcional, validarRecuperaçãoAcessoOpcional }
 from "../../utilitários/validações";
-
+import servidor from "../../serviços/servidor";
 
 
 import { TAMANHOS, TEMA_PADRÃO, estilizarBotão, estilizarCard, estilizarDialog,
@@ -95,14 +95,18 @@ setMostrarModalConfirmação(false);
 async function validarConfirmarCriação() {
   const camposVálidos = validarCampos();
   if (camposVálidos) {
+    console.log("Iniciando verificação de CPF para:", dados.cpf);
     try {
       const response = await servidor.get(`/usuarios/verificar-cpf-existente/${dados.cpf}`);
+      console.log("Resposta da API recebida:", response);
+
       if (response && response.data && response.data.dados) {
         mostrarToast(referênciaToast, "Usuário com esse CPF já existe", "erro");
         return;
       }
       confirmarOperação("salvar");
     } catch (error) {
+      console.error("Erro na chamada da API:", error.response || error.message);
       if (error.response && error.response.data && error.response.data.erro) {
         mostrarToast(referênciaToast, error.response.data.erro, "erro");
       } else {
