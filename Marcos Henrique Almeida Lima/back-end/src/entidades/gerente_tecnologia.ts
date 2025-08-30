@@ -1,22 +1,26 @@
 import { BaseEntity, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn }
 from "typeorm";
 import Usuário from "./usuário";
-import Interesse from "./patrocinio";
-export enum Curso { EC = "Engenharia de Computação", SI = "Sistemas de Informação" };
+import Patrocínio from "./patrocinio";
+export enum Titulacao  { EC = "Engenharia de Computação", SI = "Sistemas de Informação" };
 @Entity()
-export default class gerentetecnologia extends BaseEntity {
+export default class GerenteTecnologia extends BaseEntity {
 @PrimaryGeneratedColumn()
 id: number;
-@Column({ type: "enum", enum: Curso })
-curso: Curso;
+@Column({ type: "enum", enum: Titulacao  })
+titulacao: Titulacao ;
 @Column()
 ano_ingresso: number;
+
 @Column({ type: "date" })
 data_nascimento: Date;
+
 @Column()
 telefone: string;
-@OneToMany(() => Interesse, (interesse) => interesse.gerentetecnologia)
-interesses: Interesse[];
+
+@OneToMany(() => Patrocínio, (patrocinio) => patrocinio.gerentetecnologia)
+patrocinios: Patrocínio[];
+
 @OneToOne(() => Usuário, usuário => usuário.gerentetecnologia, { onDelete: "CASCADE" })
 @JoinColumn()
 usuário: Usuário;

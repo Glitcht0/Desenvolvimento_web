@@ -1,6 +1,6 @@
 import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import GerenteMineradora from "./gerente_mineradora";
-import Interesse from "./patrocinio";
+import Patrocínio from "./patrocinio";
 export enum Categoria { EXTENSÃO = "Extensão", IC = "Iniciação Científica", TCC = "TCC" };
 export enum Resultado { ARTIGO = "artigo", DESENVOLVIMENTO = "desenvolvimento", MONOGRAFIA =
 "monografia" };
@@ -25,6 +25,6 @@ concorrendo_bolsa: boolean;
 resultado: Resultado;
 @ManyToOne(() => GerenteMineradora, (gerentemineradora) => gerentemineradora.participacaos, { onDelete: "CASCADE" })
 gerentemineradora: GerenteMineradora;
-@OneToMany(() => Interesse, (interesse) => interesse.proposta)
-interesses: Interesse[];
+@OneToMany(() => Patrocínio, (interesse) => interesse.participacao_mineracao)
+patrocinios: Patrocínio[];
 }
