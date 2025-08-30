@@ -40,9 +40,9 @@ navegar("../pagina-inicial");
 };
 function finalizarCadastro() {
 if (dados.perfil === "professor") {
-setUsuárioLogado({ ...dados, cadastrado: false });
-setMostrarModalConfirmação(false);
-navegar("../cadastrar-empresa-mineradora");
+    setUsuárioLogado({ ...dados, cadastrado: false });
+    setMostrarModalConfirmação(false);
+    navegar("../cadastrar-empresa-mineradora");
 }
 };
 function executarOperação() {
