@@ -35,7 +35,7 @@ email: usuárioLogado?.email || "", senha: "", confirmação: "",
 questão: usuárioLogado?.questão || "", resposta: "",
 cor_tema: usuárioLogado?.cor_tema || TEMA_PADRÃO });
 const [erros, setErros] = useState({});
-const opçõesPerfis = [{ label: "GerenteMineradora", value: "professor" },
+const opçõesPerfis = [{ label: "GerenteMineradora", value: "gerente_Tecnologia" },
 { label: "Gerentetecnologia", value: "gerentetecnologia" }];
 function alterarEstado(event) {
 const chave = event.target.name;
