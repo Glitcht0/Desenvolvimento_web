@@ -1,7 +1,7 @@
 import { BaseEntity, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn }
 from "typeorm";
 import Usuário from "./usuário";
-import Patrocínio from "./patrocinio";
+import Patrocínio from "./patrocínio";
 export enum Titulacao  { EC = "Engenharia de Computação", SI = "Sistemas de Informação" };
 @Entity()
 export default class GerenteTecnologia extends BaseEntity {

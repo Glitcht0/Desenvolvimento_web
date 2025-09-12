@@ -1,7 +1,7 @@
 import { Router } from "express";
 import verificarToken from "../middlewares/verificar-token";
-import verificarPerfilgerentemineradora from "../middlewares/verificar-perfil-gerentemineradora";
-import Serviçosgerentemineradora from "../serviços/serviços-gerentemineradora";
+import verificarPerfilgerentemineradora from "../middlewares/verificar-perfil-gerente-mineradora";
+import Serviçosgerentemineradora from "../serviços/serviços-gerente-mineradora";
 const RotasGerentemineradora = Router();
 export default RotasGerentemineradora;
 RotasGerentemineradora.post("/", Serviçosgerentemineradora.cadastrargerentemineradora);

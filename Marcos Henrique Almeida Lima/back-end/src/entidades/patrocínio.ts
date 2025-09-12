@@ -1,7 +1,7 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from
 "typeorm";
-import GerenteTecnologia from "./gerente_tecnologia";
-import ParticipacaoMineração from "./participacao_mineracao";
+import GerenteTecnologia from "./gerente-tecnologia";
+import ParticipacaoMineração from "./participação-mineração";
 @Entity()
 export default class Patrocínio extends BaseEntity {
     @PrimaryGeneratedColumn()

@@ -1,7 +1,7 @@
 import { BaseEntity, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from
 "typeorm";
 import Usuário from "./usuário";
-import ParticipacaoMineração from "./participacao_mineracao";
+import ParticipacaoMineração from "./participação-mineração";
 export enum Titulação {DiretorOperações = "diretor de operações", SupervisorLavragem = "supervisor de lavragem", CoordenadorExploração = "coordenador de exploração", EngenheiroMinas = "engenheiro de minas", TécnicoMinas = "técnico de minas"};
 @Entity()
 export default class GerenteMineradora extends BaseEntity {

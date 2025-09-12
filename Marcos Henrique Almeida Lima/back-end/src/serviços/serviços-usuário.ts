@@ -4,7 +4,7 @@ import md5 from "md5";
 import { sign } from "jsonwebtoken";
 import Usuário, { Perfil } from "../entidades/usuário";
 import GerenteMineradora from "../entidades/gerente-mineradora";
-import GerenteTecnologia  from "../entidades/gerente_tecnologia";
+import GerenteTecnologia  from "../entidades/gerente-tecnologia";
 dotenv.config();
 const SALT = 10;
 const SENHA_JWT = process.env.SENHA_JWT;

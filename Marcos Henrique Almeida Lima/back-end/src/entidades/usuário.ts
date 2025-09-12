@@ -1,6 +1,6 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, OneToOne, PrimaryColumn } from "typeorm";
 import GerenteMineradora from "./gerente-mineradora";
-import GerenteTecnologia  from "./gerente_tecnologia";
+import GerenteTecnologia  from "./gerente-tecnologia";
 export enum Perfil { GERENTETECNOLOGIA = "gerentetecnologia", GERENTEMINERADORA = "gerente_Tecnologia" };
 export enum Status { PENDENTE = "pendente", ATIVO = "ativo" };
 

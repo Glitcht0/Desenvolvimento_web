@@ -3,7 +3,7 @@ import RotasUsuárioLogado from "./rotas-usuário-logado";
 import LogarUsuário from "../páginas/usuário/logar-usuário";
 import CadastrarUsuário from "../páginas/usuário/cadastrar-usuário";
 import PáginaInicial from "../páginas/usuário/página-inicial";
-import CadastrarEmpresaMineradora from "../páginas/gerentetecnologia/cadastrar-empresa-mineradora";
+import CadastrarEmpresaMineradora from "../páginas/gerente-mineradora/adastrar-gerente-mineradora";
 export default function Rotas() {
 return (
 <BrowserRouter>
