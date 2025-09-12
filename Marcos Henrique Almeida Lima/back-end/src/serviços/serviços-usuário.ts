@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import md5 from "md5";
 import { sign } from "jsonwebtoken";
 import Usuário, { Perfil } from "../entidades/usuário";
-import GerenteMineradora from "../entidades/gerente_mineradora";
+import GerenteMineradora from "../entidades/gerente-mineradora";
 import GerenteTecnologia  from "../entidades/gerente_tecnologia";
 dotenv.config();
 const SALT = 10;

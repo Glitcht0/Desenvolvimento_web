@@ -1,5 +1,5 @@
 import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import GerenteMineradora from "./gerente_mineradora";
+import GerenteMineradora from "./gerente-mineradora";
 import Patrocínio from "./patrocinio";
 
 export enum Categoria {
