@@ -8,7 +8,7 @@ import { Dropdown } from "primereact/dropdown";
 import { InputNumber } from "primereact/inputnumber";
 import { Toast } from "primereact/toast";
 import ContextoUsuário from "../../contextos/contexto-usuário";
-import { serviçoCadastrargerentemineradora as serviçoCadastrargerentemineradora, serviçoBuscargerentemineradora as serviçoBuscargerentemineradora }
+import { serviçoCadastrarGerenteMineradora, serviçoBuscarGerenteMineradora}
 from "../../serviços/serviços-gerente-mineradora";
 import mostrarToast from "../../utilitários/mostrar-toast";
 import { MostrarMensagemErro, checarListaVazia, validarCamposObrigatórios }
@@ -17,7 +17,7 @@ from "../../utilitários/validações";
 import {estilizarBotão, estilizarBotãoRetornar, estilizarCard, estilizarDivCampo, estilizarDivider,
 estilizarDropdown, estilizarFlex, estilizarInlineFlex, estilizarInputNumber, estilizarLabel }
 from "../../utilitários/estilos";
-export default function Cadastrargerentemineradora() {
+export default function CadastrarGerenteMineradora() {
 const referênciaToast = useRef(null);
 const { usuárioLogado, setUsuárioLogado } = useContext(ContextoUsuário);
 const [dados, setDados] = useState({ titulação: "", anos_experiência_empresarial: "" });
@@ -45,10 +45,10 @@ else return "Cadastrar Empresa mineradora";
 };
 
 
-async function cadastrargerentemineradora() {
+async function cadastrarGerenteMineradora() {
 if (validarCampos()) {
 try {
-const response = await serviçoCadastrargerentemineradora({ ...dados, usuário_info: usuárioLogado,
+const response = await serviçoCadastrarGerenteMineradora({ ...dados, usuário_info: usuárioLogado,
 titulação: dados.titulação,
 anos_experiência_empresarial: dados.anos_experiência_empresarial });
 if (response.data)
@@ -69,7 +69,7 @@ if (usuárioLogado?.cadastrado) return "Consultar";
 else return "Cadastrar";
 };
 function açãoBotãoSalvar() {
-if (!usuárioLogado?.cadastrado) cadastrargerentemineradora();
+if (!usuárioLogado?.cadastrado) cadastrarGerenteMineradora();
 };
 
 function redirecionar() {
@@ -86,9 +86,9 @@ navegar("/pagina-inicial");
 
 useEffect(() => {
 let desmontado = false;
-async function buscarDadosgerentemineradora() {
+async function buscarDadosGerenteMineradora() {
 try {
-const response = await serviçoBuscargerentemineradora(usuárioLogado.cpf);
+const response = await serviçoBuscarGerenteMineradora (usuárioLogado.cpf);
 if (!desmontado && response.data) {
 setDados(dados => ({ ...dados, titulação: response.data.titulação,
 anos_experiência_empresarial: response.data.anos_experiência_empresarial }));
@@ -104,7 +104,7 @@ if (erro) mostrarToast(referênciaToast, erro, "erro");
 
 
 
-if (usuárioLogado?.cadastrado) buscarDadosgerentemineradora();
+if (usuárioLogado?.cadastrado) buscarDadosGerenteMineradora();
 return () => desmontado = true;
 }, [usuárioLogado?.cadastrado, usuárioLogado.cpf]);
 return (

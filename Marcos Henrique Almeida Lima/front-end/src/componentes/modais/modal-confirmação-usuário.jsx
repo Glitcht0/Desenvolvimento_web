@@ -42,7 +42,7 @@ function finalizarCadastro() {
 if (dados.perfil === "gerente_Tecnologia") {
     setUsuárioLogado({ ...dados, cadastrado: false });
     setMostrarModalConfirmação(false);
-    navegar("../cadastrar-empresa-mineradora");
+    navegar("../cadastrar-gerente-mineradora");
 }
 };
 function executarOperação() {

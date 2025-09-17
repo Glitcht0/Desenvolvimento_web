@@ -3,8 +3,8 @@ import RotasUsuárioLogado from "./rotas-usuário-logado";
 import LogarUsuário from "../páginas/usuário/logar-usuário";
 import CadastrarUsuário from "../páginas/usuário/cadastrar-usuário";
 import PáginaInicial from "../páginas/usuário/página-inicial";
-import CadastrarEmpresaMineradora from "../páginas/gerente-mineradora/cadastrar-gerente-mineradora";
-export default function Rotas() {
+import CadastrarGerenteMineradora from "../páginas/gerente-mineradora/cadastrar-gerente-mineradora";
+export default function RotasAplicação() {
 return (
 <BrowserRouter>
 <Routes>
@@ -13,7 +13,7 @@ return (
 <Route element={<RotasUsuárioLogado/>}>
 <Route element={<PáginaInicial/>} path="pagina-inicial"/>
 <Route element={<CadastrarUsuário/>} path="atualizar-usuario"/>
-<Route element={<CadastrarEmpresaMineradora/>} path="cadastrar-empresa-mineradora"/>
+<Route element={<CadastrarGerenteMineradora/>} path="cadastrar-gerente-mineradora"/>
 </Route>
 </Routes>
 </BrowserRouter>

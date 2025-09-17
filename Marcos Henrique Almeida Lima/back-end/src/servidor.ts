@@ -10,7 +10,7 @@ const CORS_ORIGIN = process.env.CORS_ORIGIN;
 app.use(cors({ origin: CORS_ORIGIN }));
 app.use(express.json());
 app.use("/usuarios", RotasUsuário);
-app.use("/gerente_mineradora", RotasGerenteMineradora);
+app.use("/gerente-mineradora", RotasGerenteMineradora);
 app.listen(PORT || 3333);
 const conexão = createConnection();
 export default conexão;

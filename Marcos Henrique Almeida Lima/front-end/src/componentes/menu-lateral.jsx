@@ -23,7 +23,7 @@ const opçõesgerentemineradora = [
 { label: "Menu", items: [
 { label: "Cadastrar Usuário", command: () => navegar("/atualizar-usuario"),
 disabled: usuárioLogado.status !== "ativo"},
-{ label: "Cadastrar GerenteMineradora", command: () => navegar("/cadastrar-empresa-mineradora")},
+{ label: "Cadastrar GerenteMineradora", command: () => navegar("/cadastrar-gerente-mineradora")},
 { label: "Sair do Sistema", command: () => sairSistema()}
 ]},
 ];
