@@ -28,7 +28,7 @@ resposta: string;
 @Column({ type: "enum", enum: Cores })
 cor_tema: string;
 @OneToOne(() => GerenteMineradora, (gerentemineradora) => gerentemineradora.usuário)
-gerentemineradora: GerenteMineradora;
+gerente_mineradora: GerenteMineradora;
 @OneToOne(() => GerenteTecnologia , (gerentetecnologia) => gerentetecnologia.usuário)
 gerentetecnologia: GerenteTecnologia ;
 @CreateDateColumn()

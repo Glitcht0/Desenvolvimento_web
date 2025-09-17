@@ -18,8 +18,8 @@ data_nascimento: Date;
 @Column()
 telefone: string;
 
-@OneToMany(() => Patrocínio, (patrocinio) => patrocinio.gerentetecnologia)
-patrocinios: Patrocínio[];
+@OneToMany(() => Patrocínio, (patrocínio) => patrocínio.gerentetecnologia)
+patrocínios: Patrocínio[];
 
 @OneToOne(() => Usuário, usuário => usuário.gerentetecnologia, { onDelete: "CASCADE" })
 @JoinColumn()

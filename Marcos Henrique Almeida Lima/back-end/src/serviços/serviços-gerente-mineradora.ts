@@ -7,7 +7,7 @@ import ServiçosUsuário from "./serviços-usuário";
 export default class Serviçosgerentemineradora {
   constructor() {}
 
-  static async cadastrargerentemineradora(request, response) {
+  static async cadastrarGerenteMineradora(request, response) {
     try {
       const { usuário_info, titulação, anos_experiência_empresarial } = request.body;
       const { usuário, token } = await ServiçosUsuário.cadastrarUsuário(usuário_info);
@@ -26,7 +26,7 @@ export default class Serviçosgerentemineradora {
     }
   };
 
-  static async buscargerentemineradora(request, response) {
+  static async buscarGerenteMineradora(request, response) {
     try {
       const cpf_encriptado = md5(request.params.cpf);
       const gerentemineradora = await GerenteMineradora.findOne({ where: { usuário: cpf_encriptado }, relations: ["usuário"] });

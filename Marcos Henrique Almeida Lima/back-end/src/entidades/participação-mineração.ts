@@ -6,7 +6,7 @@ export enum Categoria {
     Extracao = "Extração",
     Exploracao = "Exploração",
     Consultoria = "Consultoria",
-    PesquisaMineral = "PesquisaMineral"
+    PesquisaMineral = "Pesquisa Mineral"
 }
 
 export enum Resultado {
@@ -15,7 +15,7 @@ export enum Resultado {
     Falha = "Falha"
 }
 @Entity()
-export default class ParticipacaoMineracao  extends BaseEntity {
+export default class ParticipaçãoMineração  extends BaseEntity {
 @PrimaryGeneratedColumn()
 id: number;
 @Column()
@@ -31,8 +31,8 @@ descrição: string;
 
 @Column({ type: "enum", enum: Resultado })
 resultado: Resultado;
-@ManyToOne(() => GerenteMineradora, (gerentemineradora) => gerentemineradora.participacoes_mineracao, { onDelete: "CASCADE" })
-gerentemineradora: GerenteMineradora;
-@OneToMany(() => Patrocínio, (patrocinio) => patrocinio.participacao_mineracao)
-patrocinios: Patrocínio[];
+@ManyToOne(() => GerenteMineradora, (gerenteMineradora) => gerenteMineradora.participações_mineração, { onDelete: "CASCADE" })
+gerente_mineradora: GerenteMineradora;
+@OneToMany(() => Patrocínio, (patrocínio) => patrocínio.participações_mineração)
+patrocínios: Patrocínio[];
 }

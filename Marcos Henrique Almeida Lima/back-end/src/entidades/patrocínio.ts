@@ -1,7 +1,7 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from
 "typeorm";
 import GerenteTecnologia from "./gerente-tecnologia";
-import ParticipacaoMineração from "./participação-mineração";
+import ParticipaçãoMineração from "./participação-mineração";
 @Entity()
 export default class Patrocínio extends BaseEntity {
     @PrimaryGeneratedColumn()
@@ -16,10 +16,10 @@ export default class Patrocínio extends BaseEntity {
     @CreateDateColumn()
     data_manifestação: Date;
 
-    @ManyToOne(() => ParticipacaoMineração, (participacao_mineracao) => participacao_mineracao.patrocinios, { onDelete: "CASCADE" })
-    participacao_mineracao: ParticipacaoMineração;
+    @ManyToOne(() => ParticipaçãoMineração, (participacao_mineracao) => participacao_mineracao.patrocínios, { onDelete: "CASCADE" })
+    participações_mineração: ParticipaçãoMineração;
     
-    @ManyToOne(() => GerenteTecnologia, (gerentetecnologia) => gerentetecnologia.patrocinios, { onDelete: "CASCADE" })
+    @ManyToOne(() => GerenteTecnologia, (gerentetecnologia) => gerentetecnologia.patrocínios, { onDelete: "CASCADE" })
     gerentetecnologia: GerenteTecnologia;
 }
 
