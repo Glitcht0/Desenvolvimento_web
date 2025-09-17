@@ -1,6 +1,6 @@
 
 
 import servidor from "./servidor";
-export function serviçoCadastrargerentemineradora(gerentemineradora)
+export function serviçoCadastrarGerenteMineradora(gerentemineradora)
 { return servidor.post("/gerente_mineradora", gerentemineradora); };
-export function serviçoBuscargerentemineradora(cpf) { return servidor.get(`/gerente_mineradora/${cpf}`); };
+export function serviçoBuscarGerenteMineradora(cpf) { return servidor.get(`/gerente_mineradora/${cpf}`); };

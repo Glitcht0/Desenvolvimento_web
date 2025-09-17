@@ -4,7 +4,7 @@ import Usuário, { Status } from "../entidades/usuário";
 import GerenteMineradora from "../entidades/gerente-mineradora";
 import ServiçosUsuário from "./serviços-usuário";
 
-export default class Serviçosgerentemineradora {
+export default class ServiçosGerenteMineradora {
   constructor() {}
 
   static async cadastrarGerenteMineradora(request, response) {
@@ -15,8 +15,8 @@ export default class Serviçosgerentemineradora {
 
       await entityManager.transaction(async (transactionManager) => {
         await transactionManager.save(usuário);
-        const gerentemineradora = GerenteMineradora.create({ usuário, titulação, anos_experiência_empresarial });
-        await transactionManager.save(gerentemineradora);
+        const gerenteMineradora = GerenteMineradora.create({ usuário, titulação, anos_experiência_empresarial });
+        await transactionManager.save(gerenteMineradora);
         await transactionManager.update(Usuário, usuário.cpf, { status: Status.ATIVO });
       });
 
@@ -29,23 +29,21 @@ export default class Serviçosgerentemineradora {
   static async buscarGerenteMineradora(request, response) {
     try {
       const cpf_encriptado = md5(request.params.cpf);
-      const gerentemineradora = await GerenteMineradora.findOne({ where: { usuário: cpf_encriptado }, relations: ["usuário"] });
+      const gerenteMineradora = await GerenteMineradora.findOne({ where: { usuário: cpf_encriptado }, relations: ["usuário"] });
 
-      if (!gerentemineradora) {
+      if (!gerenteMineradora) {
         return response.status(404).json({ erro: "GerenteMineradora não encontrado." });
       }
 
-      // O erro estava na linha abaixo, faltando uma propriedade ou tendo uma vírgula extra.
-      // O código correto inclui a propriedade 'anos_experiência_empresarial' e fecha o objeto.
-      return response.json({
-        nome: gerentemineradora.usuário.nome,
-        email: gerentemineradora.usuário.email,
-        titulação: gerentemineradora.titulação,
-        anos_experiência_empresarial: gerentemineradora.anos_experiência_empresarial
+        return response.json({
+        nome: gerenteMineradora.usuário.nome,
+        email: gerenteMineradora.usuário.email,
+        titulação: gerenteMineradora.titulação,
+        anos_experiência_empresarial: gerenteMineradora.anos_experiência_empresarial
       });
 
     } catch (error) {
-      return response.status(500).json({ erro: "Erro BD: buscargerentemineradora" });
+      return response.status(500).json({ erro: "Erro BD: buscarGerenteMineradora" });
     }
   };
 }
