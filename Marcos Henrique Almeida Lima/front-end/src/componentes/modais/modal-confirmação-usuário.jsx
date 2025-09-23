@@ -58,11 +58,12 @@ navegar("../pagina-inicial");
 
 
 function finalizarCadastro() {
+    console.log("Valor da operação: ", dados.perfil); // Linha adicionada
 if (dados.perfil === "gerente_Tecnologia") {
     setUsuárioLogado({ ...dados, cadastrado: false });
     setMostrarModalConfirmação(false);
     navegar("../cadastrar-gerente-mineradora");
-} else if (dados.perfil === "gerente-tecnologia") {
+} else if (dados.perfil === "gerentetecnologia") {
     setUsuárioLogado({ ...dados, cadastrado: false });
     setMostrarModalConfirmação(false);
     navegar("../cadastrar-gerente-tecnologia");
@@ -91,20 +92,24 @@ await serviçoRemoverUsuário(usuárioLogado.cpf);
 
 
 function executarOperação() {
-switch (confirmaçãoUsuário.operação) {
-case "salvar":
- finalizarCadastro();
-break;
-case "alterar":
- alterarUsuário({ email: dados.email, senha: dados.senha, questão: dados.questão,
- resposta: dados.resposta, cor_tema: dados.cor_tema });
-break;
-case "remover":
- removerUsuário();
-break;
-default: break;
- }
- };
+  console.log("Valor da operação: ", confirmaçãoUsuário.operação); // Linha adicionada
+  switch (confirmaçãoUsuário.operação) {
+    case "salvar":
+      finalizarCadastro();
+      break;
+    case "alterar":
+      alterarUsuário({
+        email: dados.email, senha: dados.senha, questão: dados.questão,
+        resposta: dados.resposta, cor_tema: dados.cor_tema
+      });
+      break;
+    case "remover":
+      removerUsuário();
+      break;
+    default:
+      break;
+  }
+};
 
 
 
