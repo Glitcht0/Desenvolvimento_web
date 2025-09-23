@@ -7,3 +7,6 @@ export default RotasGerenteMineradora;
 RotasGerenteMineradora.post("/", ServiçosGerenteMineradora.cadastrarGerenteMineradora);
 RotasGerenteMineradora.get("/:cpf", verificarToken, verificarPerfilGerenteMineradora,
 ServiçosGerenteMineradora.buscarGerenteMineradora);
+
+RotasGerenteMineradora.patch("/", verificarToken, verificarPerfilGerenteMineradora,
+ ServiçosGerenteMineradora.AtualizarGerenteMineradora);
