@@ -27,7 +27,19 @@ disabled: usuárioLogado.status !== "ativo"},
 { label: "Sair do Sistema", command: () => sairSistema()}
 ]},
 ];
-const opçõesgerentetecnologia = [];
+
+
+const opçõesgerentetecnologia = [
+ { label: "Página Inicial", command: () => navegar("/pagina-inicial") },
+ { label: "Menu", items: [
+ { label: "Cadastrar Usuário", command: () => navegar("/atualizar-usuario"),
+ disabled: usuárioLogado.status !== "ativo"},
+ { label: "Cadastrar Gerente Tecnologia", command: () => navegar("/cadastrar-gerente-tecnologia")},
+ { label: "Sair do Sistema", command: () => sairSistema()},
+ ]},
+ ];
+
+
 function sairSistema() {
 setUsuárioLogado({});
 navegar("/");

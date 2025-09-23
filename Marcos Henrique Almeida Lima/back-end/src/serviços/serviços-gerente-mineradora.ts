@@ -4,6 +4,8 @@ import Usuário, { Status } from "../entidades/usuário";
 import GerenteMineradora from "../entidades/gerente-mineradora";
 import ServiçosUsuário from "./serviços-usuário";
 
+
+
 export default class ServiçosGerenteMineradora {
   constructor() {}
 
@@ -25,6 +27,17 @@ export default class ServiçosGerenteMineradora {
       return response.status(500).json({ erro: error });
     }
   };
+
+  static async AtualizarGerenteMineradora(request, response) {
+  try {
+  const { cpf, titulação, anos_experiência_empresarial } = request.body;
+  const cpf_encriptado = md5(cpf);
+  await GerenteMineradora.update({ usuário: { cpf: cpf_encriptado } },
+  { titulação, anos_experiência_empresarial });
+  return response.json();
+  } catch (error) { return response.status(500).json({ erro: "Erro BD : AtualizarGerenteMineradora" }); }
+  };
+
 
   static async buscarGerenteMineradora(request, response) {
     try {

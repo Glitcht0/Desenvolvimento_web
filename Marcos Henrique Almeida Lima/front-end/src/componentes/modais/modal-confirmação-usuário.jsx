@@ -3,6 +3,9 @@ import { useContext, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
+import { serviçoAlterarUsuário, serviçoRemoverUsuário } from "../../serviços/serviços-usuário";
+import mostrarToast from "../../utilitários/mostrar-toast";
+
 import ContextoUsuário from "../../contextos/contexto-usuário";
 import { estilizarBotão, estilizarBotãoRemover, estilizarDivCampo, estilizarInlineFlex,
 estilizarLabel, estilizarModal } from "../../utilitários/estilos";
@@ -16,7 +19,8 @@ const dados = { cpf: confirmaçãoUsuário?.cpf, perfil: confirmaçãoUsuário?.
 nome: confirmaçãoUsuário?.nome, senha: confirmaçãoUsuário?.senha,
 email: confirmaçãoUsuário?.email, questão: confirmaçãoUsuário?.questão,
 resposta: confirmaçãoUsuário?.resposta, cor_tema: confirmaçãoUsuário?.cor_tema };
-const [redirecionar] = useState(false);
+const [redirecionar, setRedirecionar] = useState(false);
+
 const navegar = useNavigate();
 function labelOperação() {
 switch (confirmaçãoUsuário?.operação) {
@@ -26,10 +30,13 @@ default: return;
 };
 function exibirPerfilFormatado() {
 switch (dados.perfil) {
-case "gerente_Tecnologia": return "GerenteMineradora";
+case "gerente-mineradora": return "GerenteMineradora";
+case "gerente-tecnologia": return "GerenteTecnologia";
 default: return "";
 }
 };
+
+
 function fecharToast() {
 if (redirecionar) {
 setMostrarModalConfirmação(false);
@@ -45,14 +52,15 @@ if (dados.perfil === "gerente_Tecnologia") {
     navegar("../cadastrar-gerente-mineradora");
 }
 };
-function executarOperação() {
-switch (confirmaçãoUsuário.operação) {
-case "salvar":
-finalizarCadastro();
-break;
-default: break;
-}
-};
+function labelOperação() {
+switch (confirmaçãoUsuário?.operação) {
+case "salvar": return "Salvar";
+case "alterar": return "Alterar";
+case "remover": return "Remover";
+default: return;
+ }
+ };
+
 function ocultar() {
 if (!redirecionar) {
 setConfirmaçãoUsuário({});

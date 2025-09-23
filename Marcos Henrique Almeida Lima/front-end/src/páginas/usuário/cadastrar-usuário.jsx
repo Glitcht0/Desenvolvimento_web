@@ -19,7 +19,7 @@ from "../../utilitários/validações";
 
 
 
-import { TAMANHOS, TEMA_PADRÃO, estilizarBotão, estilizarCard, estilizarDialog,
+import { TAMANHOS, TEMA_PADRÃO, estilizarBotão, estilizarCard, estilizarDialog, estilizarBotãoRemover,
 estilizarDivBotõesAção, estilizarDivCampo, estilizarDivider, estilizarDropdown, estilizarFlex,
 estilizarFooterDialog, estilizarInputMask, estilizarInputText, estilizarLabel, estilizarLink,
 estilizarPasswordInput, estilizarPasswordTextInputBorder, estilizarSubtítulo, opçõesCores }
@@ -74,8 +74,15 @@ else return validarCamposAdministrar();
 };
 function títuloFormulário() {
 if (!usuárioLogado?.perfil) return "Cadastrar Usuário";
-else return "Consultar Usuário";
+else return "Alterar Usuário";
 };
+
+function validarConfirmarAlteração() {
+const camposVálidos = validarCampos();
+if (camposVálidos) confirmarOperação("alterar");
+};
+
+
 function textoRetorno() {
 if (!usuárioLogado?.perfil) return "Retornar para login";
 else return "Retornar para página inicial";
@@ -111,14 +118,23 @@ setMostrarModalConfirmação(true);
 function ComandosConfirmação() {
 if (!usuárioLogado?.perfil) {
 return <Button className={estilizarBotão(dados.cor_tema)} label="Salvar"
-onClick={validarConfirmarCriação}/>;
-} else {
+ onClick={validarConfirmarCriação}/>;
+ } else {
 return (
 <div className={estilizarDivBotõesAção()}>
+<Button className={estilizarBotão(dados.cor_tema)} label="Alterar"
+ onClick={() => validarConfirmarAlteração()}/>
+<Button className={estilizarBotãoRemover(dados.cor_tema)} label="Remover"
+ onClick={() => confirmarOperação("remover")}/>
 </div>
-);
-}
-};
+ );
+ }
+ };
+
+
+
+
+
 function alinharCentro() { if (!usuárioLogado?.cadastrado) return "center"; };
 return (
 <div className={estilizarFlex(alinharCentro())}>

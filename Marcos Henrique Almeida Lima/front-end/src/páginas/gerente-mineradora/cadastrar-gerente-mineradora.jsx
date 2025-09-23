@@ -8,7 +8,7 @@ import { Dropdown } from "primereact/dropdown";
 import { InputNumber } from "primereact/inputnumber";
 import { Toast } from "primereact/toast";
 import ContextoUsuário from "../../contextos/contexto-usuário";
-import { serviçoCadastrarGerenteMineradora, serviçoBuscarGerenteMineradora}
+import { serviçoCadastrarGerenteMineradora, serviçoBuscarGerenteMineradora, serviçoAtualizarGerenteMineradora}
 from "../../serviços/serviços-gerente-mineradora";
 import mostrarToast from "../../utilitários/mostrar-toast";
 import { MostrarMensagemErro, checarListaVazia, validarCamposObrigatórios }
@@ -40,10 +40,19 @@ setErros(errosCamposObrigatórios);
 return checarListaVazia(errosCamposObrigatórios);
 };
 function títuloFormulário() {
-if (usuárioLogado?.cadastrado) return "Consultar Empresa mineradora";
+if (usuárioLogado?.cadastrado) return "Alterar Empresa mineradora";
 else return "Cadastrar Empresa mineradora";
 };
 
+/*
+async function AtualizarGerenteMineradora() {
+if (validarCampos()) {
+try {
+const response = await serviçoAtualizarGerenteMineradora({ ...dados, cpf: usuárioLogado.cpf });
+if (response) mostrarToast(referênciaToast, "Professor atualizado com sucesso!", "sucesso");
+ } catch (error) { mostrarToast(referênciaToast, error.response.data.erro, "erro"); }
+ }
+};*/
 
 async function cadastrarGerenteMineradora() {
 if (validarCampos()) {
@@ -65,7 +74,7 @@ mostrarToast(referênciaToast, error.response.data.erro, "erro");
 
 
 function labelBotãoSalvar() {
-if (usuárioLogado?.cadastrado) return "Consultar";
+if (usuárioLogado?.cadastrado) return "Alterar";
 else return "Cadastrar";
 };
 function açãoBotãoSalvar() {
