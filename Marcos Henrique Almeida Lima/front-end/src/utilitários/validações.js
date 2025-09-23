@@ -18,6 +18,16 @@ errosConfirmaçãoSenhaOpcional.confirmação_senha = ERRO_CONFIRMAÇÃO_SENHA;
 }
 return errosConfirmaçãoSenhaOpcional;
 };
+
+export function validarCpf(cpf) {
+ cpf = cpf.replace(/[^\d]/g, '');
+if (cpf.length === 11) return true;
+return false;
+};
+
+
+
+
 export function validarConfirmaçãoSenhaOpcional(senha, confirmação_senha) {
 let errosConfirmaçãoSenhaOpcional = {};
 if (senha && confirmação_senha && senha !== confirmação_senha) {

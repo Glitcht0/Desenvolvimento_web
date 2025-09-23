@@ -10,13 +10,22 @@ export const opçõesCores = [
 { label: "Verde", value: "green" },
 { label: "Verde Azulado", value: "teal" }
 ];
-export const TAMANHOS = { CPF: 13, SENHA: 15 };
+export const TAMANHOS = { ANO: 4, CPF: 13, SENHA: 15 , TELEFONE: 12};
 export const TEMA_PADRÃO = "bluegray";
 export function estilizarBotão() {
 const cor_botão = "green";
 return `p-button-sm h-2rem text-base w-auto md:w-min mr-2
 bg-${cor_botão}-600 border-${cor_botão}-800 shadow-6`;
+
+
 };
+
+export function estilizarParágrafo() {
+return "text-justify text-lg md:text-sm align-self-start text-gray-900";
+};
+
+
+
 export function estilizarBotãoRemover() {
 const cor_borda = "bluegray";
 return `p-button-sm h-2rem text-base w-auto md:w-min mr-2 p-button-danger
