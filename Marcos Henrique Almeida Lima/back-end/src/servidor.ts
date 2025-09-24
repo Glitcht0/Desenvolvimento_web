@@ -4,7 +4,8 @@ import "reflect-metadata";
 import { createConnection } from "typeorm";
 import RotasUsuário from "./rotas/rotas-usuário";
 import RotasGerenteMineradora from "./rotas/rotas-gerente-mineradora";
-import RotasGerenteTecnologia  from "./rotas/rotas-gerente-tecnologia";
+
+import RotasGerenteTecnologia from "./rotas/rotas-gerente-tecnologia";
 const app = express();
 const PORT = process.env.PORT
 const CORS_ORIGIN = process.env.CORS_ORIGIN;

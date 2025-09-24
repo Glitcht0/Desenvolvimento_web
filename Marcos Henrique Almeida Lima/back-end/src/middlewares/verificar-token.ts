@@ -7,6 +7,7 @@ const SENHA_JWT = process.env.SENHA_JWT;
 
 export default function verificarToken(request, response, next) {
 const header = request.headers.authorization;
+console.log("Header de autorização recebido:", header); 
 if (!header) return response.status(401).json({ erro: "Token nao informado." });
 const token = header.split(' ')[1];
 

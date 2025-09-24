@@ -52,6 +52,7 @@ function validarCampos() {
 
 
 function títuloFormulário() {
+    console.log("usuárioLogado dentro de títuloFormulário:", usuárioLogado.cadastrado);
 if (usuárioLogado?.cadastrado) return "Alterar Gerente Tecnologia";
 else return "Cadastrar Gerente Tecnologia";
 };
