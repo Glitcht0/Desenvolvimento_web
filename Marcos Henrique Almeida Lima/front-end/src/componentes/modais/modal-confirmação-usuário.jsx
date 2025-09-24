@@ -63,7 +63,7 @@ if (dados.perfil === "gerente_Tecnologia") {
     setUsuárioLogado({ ...dados, cadastrado: false });
     setMostrarModalConfirmação(false);
     navegar("../cadastrar-gerente-mineradora");
-} else if (dados.perfil === "gerentetecnologia") {
+} else if (dados.perfil === "gerente-tecnologia") {
     setUsuárioLogado({ ...dados, cadastrado: false });
     setMostrarModalConfirmação(false);
     navegar("../cadastrar-gerente-tecnologia");

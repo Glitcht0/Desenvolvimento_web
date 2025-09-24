@@ -143,9 +143,17 @@ useEffect(() => {
         try {
             console.log("Buscando dados do gerente de tecnologia para o CPF:", usuárioLogado.cpf);
             console.log("usuárioLogado:", usuárioLogado);
-            console.log("Teste");
+
+            // Teste se a função existe antes de chamar
+            if (typeof serviçoBuscarGerenteTecnologia !== 'function') {
+                const msg = `Função serviçoBuscarGerenteTecnologia não encontrada! Esperado em: front-end/src/serviços/serviços-gerente-tecnologia.js`;
+                console.error(msg);
+                mostrarToast(referênciaToast, msg, "erro");
+                return;
+            }
+
             const response = await serviçoBuscarGerenteTecnologia(usuárioLogado.cpf);
-            
+            console.log("Teste");
 
             console.log("Resposta recebida do serviço de busca:", response);
 
@@ -173,7 +181,7 @@ useEffect(() => {
             }
         }
     }
-
+    
     if (usuárioLogado?.cadastrado) {
         buscarDadosGerenteTecnologia();
     }

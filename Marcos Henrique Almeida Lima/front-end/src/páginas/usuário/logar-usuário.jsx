@@ -27,12 +27,18 @@ return checarListaVazia(erros);
 };
 async function logarUsuário() {
 if (validarCampos()) {
-try {
-const response = await serviçoLogarUsuário(dados);
-setUsuárioLogado({ ...response.data?.usuárioLogado, cpf: dados.nome_login,
-cadastrado: true });
-navegar("/pagina-inicial");
-} catch (error) { mostrarToast(referênciaToast, error.response.data.erro, "error"); }
+	try {
+		const response = await serviçoLogarUsuário(dados);
+        //Alteração feita aqui TODO
+		// Salva o token no localStorage
+		if (response.data?.usuárioLogado?.token) {
+			localStorage.setItem('token', response.data.usuárioLogado.token);
+		}
+		setUsuárioLogado({ ...response.data?.usuárioLogado, cpf: dados.nome_login, cadastrado: true });
+		navegar("/pagina-inicial");
+	} catch (error) {
+		mostrarToast(referênciaToast, error.response.data.erro, "error");
+	}
 }
 };
 function alterarEstado(event) {

@@ -1,7 +1,7 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, OneToOne, PrimaryColumn } from "typeorm";
 import GerenteMineradora from "./gerente-mineradora";
 import GerenteTecnologia  from "./gerente-tecnologia";
-export enum Perfil { GERENTETECNOLOGIA = "gerentetecnologia", GERENTEMINERADORA = "gerente_Tecnologia" };
+export enum Perfil { GERENTETECNOLOGIA = "gerente-tecnologia", GERENTEMINERADORA = "gerente_Tecnologia" };
 export enum Status { PENDENTE = "pendente", ATIVO = "ativo" };
 
 export enum Cores { AMARELO = "yellow", ANIL = "indigo", AZUL = "blue", AZUL_PISCINA = "cyan",

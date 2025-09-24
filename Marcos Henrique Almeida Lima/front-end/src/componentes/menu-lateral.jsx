@@ -18,7 +18,7 @@ const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 const [visible, setVisible] = useState(false);
 const tamanhoDesktop = windowWidth > 991;
 const navegar = useNavigate();
-const opçõesgerentemineradora = [
+const opçõesGerenteMineradora = [
 { label: "Página Inicial", command: () => navegar("/pagina-inicial") },
 { label: "Menu", items: [
 { label: "Cadastrar Usuário", command: () => navegar("/atualizar-usuario"),
@@ -29,7 +29,7 @@ disabled: usuárioLogado.status !== "ativo"},
 ];
 
 
-const opçõesgerentetecnologia = [
+const opçõesGerenteTecnologia = [
  { label: "Página Inicial", command: () => navegar("/pagina-inicial") },
  { label: "Menu", items: [
  { label: "Cadastrar Usuário", command: () => navegar("/atualizar-usuario"),
@@ -46,8 +46,8 @@ navegar("/");
 };
 function opçõesMenu() {
 switch (usuárioLogado.perfil) {
-case "gerente_Tecnologia": return opçõesgerentemineradora;
-case "gerentetecnologia": return opçõesgerentetecnologia;
+case "gerente_Tecnologia": return opçõesGerenteMineradora;
+case "gerente-tecnologia": return opçõesGerenteTecnologia;
 default: return;
 }
 };
