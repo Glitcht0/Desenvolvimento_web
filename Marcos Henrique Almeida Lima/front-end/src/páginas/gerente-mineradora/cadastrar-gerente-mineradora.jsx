@@ -44,15 +44,15 @@ if (usuárioLogado?.cadastrado) return "Alterar Empresa mineradora";
 else return "Cadastrar Empresa mineradora";
 };
 
-/*
-async function AtualizarGerenteMineradora() {
+
+async function atualizarGerenteMineradora() {
 if (validarCampos()) {
 try {
 const response = await serviçoAtualizarGerenteMineradora({ ...dados, cpf: usuárioLogado.cpf });
-if (response) mostrarToast(referênciaToast, "Professor atualizado com sucesso!", "sucesso");
+if (response) mostrarToast(referênciaToast, "gerente mineradora atualizado com sucesso!", "sucesso");
  } catch (error) { mostrarToast(referênciaToast, error.response.data.erro, "erro"); }
  }
-};*/
+};
 
 async function cadastrarGerenteMineradora() {
 if (validarCampos()) {
@@ -74,12 +74,22 @@ mostrarToast(referênciaToast, error.response.data.erro, "erro");
 
 
 function labelBotãoSalvar() {
+    console.log("labelBotãoSalvar");
+    console.log(usuárioLogado);
+    
 if (usuárioLogado?.cadastrado) return "Alterar";
 else return "Cadastrar";
 };
+
+
 function açãoBotãoSalvar() {
-if (!usuárioLogado?.cadastrado) cadastrarGerenteMineradora();
-};
+    console.log(usuárioLogado);
+  if (usuárioLogado?.cadastrado) {
+    atualizarGerenteMineradora();
+  } else {
+    cadastrarGerenteMineradora();
+  }
+}
 
 function redirecionar() {
 if (cpfExistente) {

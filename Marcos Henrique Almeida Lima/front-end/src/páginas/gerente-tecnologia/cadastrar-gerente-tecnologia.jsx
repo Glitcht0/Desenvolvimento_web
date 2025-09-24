@@ -9,7 +9,7 @@ import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
 import ContextoUsuário from "../../contextos/contexto-usuário";
 import { ANO_MÁSCARA, TELEFONE_MÁSCARA } from "../../utilitários/máscaras";
-import { serviçoCadastrarGerenteTecnologia, serviçoAtualizarGerenteTecnologia, serviçoBuscarGerenteTecnologia  }
+import { serviçoCadastrarGerenteTecnologia, serviçoAtualizarGerenteTecnologia, serviçoBuscarGerenteTecnologia}
 from "../../serviços/serviços-gerente-tecnologia";
 import mostrarToast from "../../utilitários/mostrar-toast";
 import { MostrarMensagemErro, checarListaVazia, validarCamposObrigatórios }
@@ -105,6 +105,7 @@ async function cadastrarGerenteTecnologia() {
 
 
 async function atualizarGerenteTecnologia() {
+    console.log("atualizarGerenteTecnologia chamado");
 if (validarCampos()) {
 try {
 const response = await serviçoAtualizarGerenteTecnologia({ ...dados, cpf: usuárioLogado.cpf });
@@ -118,6 +119,8 @@ if (usuárioLogado?.cadastrado) return "Alterar";
 else return "Cadastrar";
 };
 function açãoBotãoSalvar() {
+    console.log(usuárioLogado);
+    console.log("açãoBotãoSalvar chamado");
 if (usuárioLogado?.cadastrado) atualizarGerenteTecnologia();
 else cadastrarGerenteTecnologia();
 };
@@ -138,8 +141,9 @@ useEffect(() => {
     async function buscarDadosGerenteTecnologia() {
         try {
             console.log("Buscando dados do gerente de tecnologia para o CPF:", usuárioLogado.cpf);
-
+            console.log("usuárioLogado:", usuárioLogado);
             const response = await serviçoBuscarGerenteTecnologia(usuárioLogado.cpf);
+            console.log("Resposta recebida do serviço de busca:", response);
 
             if (!desmontado && response?.data) {
                 console.log("Dados do gerente de tecnologia encontrados:", response.data);

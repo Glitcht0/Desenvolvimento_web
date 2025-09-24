@@ -46,7 +46,10 @@ constructor() {}
     }
   }
 
+
+
   static async buscarGerenteTecnologia(request, response) {
+    console.log("buscarGerenteTecnologia chamado");
     try {
       const cpf_encriptado = md5(request.params.cpf);
       const gerente = await GerenteTecnologia.findOne({
