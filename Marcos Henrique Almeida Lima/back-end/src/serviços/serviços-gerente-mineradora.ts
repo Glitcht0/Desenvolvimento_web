@@ -29,6 +29,7 @@ export default class ServiçosGerenteMineradora {
   };
 
   static async AtualizarGerenteMineradora(request, response) {
+  console.log("AtualizarGerenteMineradora chamado");
   try {
   const { cpf, titulação, anos_experiência_empresarial } = request.body;
   const cpf_encriptado = md5(cpf);

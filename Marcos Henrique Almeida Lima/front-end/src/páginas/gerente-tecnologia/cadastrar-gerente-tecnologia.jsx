@@ -142,7 +142,10 @@ useEffect(() => {
         try {
             console.log("Buscando dados do gerente de tecnologia para o CPF:", usuárioLogado.cpf);
             console.log("usuárioLogado:", usuárioLogado);
+            console.log("Teste");
             const response = await serviçoBuscarGerenteTecnologia(usuárioLogado.cpf);
+            
+
             console.log("Resposta recebida do serviço de busca:", response);
 
             if (!desmontado && response?.data) {

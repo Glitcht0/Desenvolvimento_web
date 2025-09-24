@@ -9,6 +9,10 @@ export default function verificarToken(request, response, next) {
 const header = request.headers.authorization;
 if (!header) return response.status(401).json({ erro: "Token nao informado." });
 const token = header.split(' ')[1];
+
+// Adiciona log do token recebido e da senha JWT esperada
+    console.log("Token recebido:", token);
+    console.log("Senha JWT esperada:", SENHA_JWT);
 try {
 const { perfil, email } = verify(token, SENHA_JWT) as JwtPayload;
 request.perfil = perfil;
