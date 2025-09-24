@@ -2,7 +2,8 @@ import { BaseEntity, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGen
 from "typeorm";
 import Usuário from "./usuário";
 import Patrocínio from "./patrocínio";
-export enum Titulacao  { EC = "Engenharia de Computação", SI = "Sistemas de Informação" };
+export enum Titulacao  { GerenteTecnologia = "Gerente Tecnologia", GerenteInovação = "Gerente Inovação", EngenheiroSistemasSênior = "Engenheiro Sistemas Sênior", LíderEquipeDesenvolvimento = "Líder Equipe Desenvolvimento" };
+
 @Entity()
 export default class GerenteTecnologia extends BaseEntity {
 @PrimaryGeneratedColumn()

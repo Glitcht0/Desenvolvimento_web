@@ -1,6 +1,7 @@
 require('dotenv').config();
 const dirRaiz = process.env.NODE_ENV === "development" ? "src" : "build/src";
 const extensão = process.env.NODE_ENV === "development" ? "ts" : "js";
+console.log(process.env.TYPEORM_PASSWORD);
 module.exports = {
 "type": process.env.TYPEORM_TYPE,
 "host": process.env.TYPEORM_HOST,
