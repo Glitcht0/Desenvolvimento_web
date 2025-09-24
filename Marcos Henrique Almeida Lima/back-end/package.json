@@ -6,7 +6,7 @@
   "engines": {
     "node": "22"
   },
-  "scripts": {
+  "scripts": {  
     "build": "tsc",
     "start": "node build/src/servidor.js",
     "test": "echo \"Error: no test specified\" && exit 1",
