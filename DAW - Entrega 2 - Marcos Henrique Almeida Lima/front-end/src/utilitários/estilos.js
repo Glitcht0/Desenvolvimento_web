@@ -10,7 +10,7 @@ export const opçõesCores = [
 { label: "Verde", value: "green" },
 { label: "Verde Azulado", value: "teal" }
 ];
-export const TAMANHOS = { ANO: 4, CPF: 13, SENHA: 15 , TELEFONE: 12};
+export const TAMANHOS = { ANO: 4, CPF: 13,MAX_LINHAS_TABELA: 10, SENHA: 15 , TELEFONE: 12};
 export const TEMA_PADRÃO = "bluegray";
 export function estilizarBotão() {
 const cor_botão = "green";
@@ -24,7 +24,38 @@ export function estilizarParágrafo() {
 return "text-justify text-lg md:text-sm align-self-start text-gray-900";
 };
 
+export function estilizarBotãoTabela(cor_tema, consultado = false) {
+let cor_botão = `text-${cor_tema}-900`;
+if (consultado) cor_botão = "p-button-danger";
+return `w-1rem p-button-sm p-button-text w-1 h-1rem ${cor_botão} shadow-6`;
+};
+export function estilizarCheckbox(erro) {
+return `w-auto mr-2 ${erro && "p-invalid"}`;
+};
+export function estilizarColunaConsultar() {
+return "w-1rem";
+};
+export function estilizarColumnHeader(cor_tema) {
+return `bg-${cor_tema}-100 text-${cor_tema}-700`;
+};
+export function estilizarDataTable() {
+return "border-1 shadow-6";
+};
+export function estilizarDataTablePaginator(cor_tema) {
+return `bg-${cor_tema}-100 text-${cor_tema}-700`;
+};
+export function estilizarFilterMenu() {
+return "flex flex-column align-items-center";
+};
 
+export function estilizarInputTextarea(erro, cor_tema) {
+let cor_borda = `border-${cor_tema}-800`;
+if (erro) cor_borda = "p-invalid";
+return `w-full lg:w-auto py-0 ${cor_borda}`;
+};
+export function estilizarTriStateCheckbox(cor_tema) {
+return `ml-2 text-${cor_tema}-800`;
+};
 
 export function estilizarBotãoRemover() {
 const cor_borda = "bluegray";
