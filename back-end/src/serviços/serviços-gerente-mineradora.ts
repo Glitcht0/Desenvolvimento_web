@@ -4,10 +4,107 @@ import Usuário, { Status } from "../entidades/usuário";
 import GerenteMineradora from "../entidades/gerente-mineradora";
 import ServiçosUsuário from "./serviços-usuário";
 
+import Patrocínio from "src/entidades/patrocínio"; //🗡️
+
+
+
+
+
 
 
 export default class ServiçosGerenteMineradora {
   constructor() {}
+
+  //🗡️========================== 99% de chance de dar erro aqui ==================================================//🗡️
+
+
+
+
+  static async cadastrarPatrocínio(request, response) {
+    try {
+      const { necessidade_bolsa, justificativa, cpf } = request.body;
+
+      const cpf_encriptado = md5(cpf);
+      const gerente = await GerenteMineradora.findOne({ where: { usuário: cpf_encriptado }, relations: ["usuário"] });
+      if (!gerente) return response.status(404).json({ erro: "Gerente mineradora não encontrado." });
+
+      await Patrocínio.create({
+        necessidade_bolsa,
+        justificativa,
+        
+      }).save();
+
+      return response.json();
+    } catch (error) {
+      return response.status(500).json({ erro: "Erro BD : cadastrarPatrocínio" });
+    }
+  };
+
+
+  static async alterarPatrocínio(request, response) {
+    try {
+      const { id, necessidade_bolsa, justificativa } = request.body;
+
+      await Patrocínio.update(id, {
+        necessidade_bolsa,
+        justificativa
+        // data_manifestação é automática, relacionamentos você não altera aqui
+      });
+
+      return response.json();
+    } catch (error) {
+      return response.status(500).json({ erro: "Erro BD : alterarPatrocínio" });
+    }
+  };
+
+ static async removerPatrocínio(request, response) {
+  try {
+    const id = request.params.id;
+    const patrocínio = await Patrocínio.findOne({ where: { id } });
+    if (!patrocínio) return response.status(404).json({ erro: "Patrocínio não encontrado." });
+
+    await Patrocínio.remove(patrocínio);
+    return response.json();
+  } catch (error) {
+    return response.status(500).json({ erro: "Erro BD : removerPatrocínio" });
+  }
+  };
+
+  static async buscarPatrocínioGerenteMineradora(request, response) {
+    try {
+      const cpf_encriptado = md5(request.params.cpf);
+
+      const patrocínios = await Patrocínio.createQueryBuilder("p")
+        .leftJoinAndSelect("p.gerentemineradora", "gm") // nome da relação correta
+        .leftJoinAndSelect("gm.usuário", "u")
+        .where("u.cpf = :cpf", { cpf: cpf_encriptado })
+        .getMany();
+
+      return response.json(patrocínios);
+    } catch (error) {
+      return response.status(500).json({ erro: "Erro BD : buscarPatrocíniosGerenteMineradora" });
+    }
+  };
+
+  static filtrarJustificativasEliminandoRepeticao(patrocinios: Patrocínio[]) {
+    const únicas = patrocinios
+      .filter((p, i, arr) => arr.findIndex(x => x.justificativa === p.justificativa) === i)
+      .map(p => ({ label: p.justificativa, value: p.justificativa }));
+    return únicas;
+  }
+
+
+  static async buscarÁreasAtuaçãoPatrocínio(request, response) {
+  try {
+  const propostas = await Patrocínio.find();
+  const áreas_atuação = ServiçosGerenteMineradora.filtrarJustificativasEliminandoRepeticao(propostas);
+  return response.json(áreas_atuação.sort());
+  } catch (error) { return response.status(500).json
+  ({ erro: "Erro BD : buscarÁreasAtuaçãoPatrocínio" }); }
+  };
+
+
+  //🗡️============================================================================//🗡️
 
   static async cadastrarGerenteMineradora(request, response) {
     try {
