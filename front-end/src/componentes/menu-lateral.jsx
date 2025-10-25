@@ -18,12 +18,16 @@ const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 const [visible, setVisible] = useState(false);
 const tamanhoDesktop = windowWidth > 991;
 const navegar = useNavigate();
+
+
+
 const opçõesGerenteMineradora = [
 { label: "Página Inicial", command: () => navegar("/pagina-inicial") },
 { label: "Menu", items: [
 { label: "Cadastrar Usuário", command: () => navegar("/atualizar-usuario"),
 disabled: usuárioLogado.status !== "ativo"},
 { label: "Cadastrar GerenteMineradora", command: () => navegar("/cadastrar-gerente-mineradora")},
+{ label: "Administrar Patrocínios", command: () => navegar("/administrar-patrocinios") }, //🗡️
 { label: "Sair do Sistema", command: () => sairSistema()}
 ]},
 ];

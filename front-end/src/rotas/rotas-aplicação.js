@@ -9,9 +9,15 @@ import CadastrarGerenteTecnologia from "../páginas/gerente-tecnologia/cadastrar
 
 
 
+//🗡️============================================================================//🗡️
 
+import RotasGerenteMineradora from "./rotas-gerente-mineradora";
 
+import ProvedorGerenteMineradora from "../contextos/contexto-gerente-mineradora";
+import AdministrarPatrocínios from "../páginas/gerente-mineradora/administrar-patrocínios"; 
+import CadastrarPatrocínio from "../páginas/gerente-mineradora/cadastrar-patrocínio";
 
+//🗡️============================================================================//🗡️
 export default function RotasAplicação() {
 return (
 <BrowserRouter>
@@ -26,6 +32,17 @@ return (
 <Route element={<PáginaInicial/>} path="pagina-inicial"/>
 <Route element={<CadastrarUsuário/>} path="atualizar-usuario"/>
 <Route element={<CadastrarGerenteMineradora/>} path="cadastrar-gerente-mineradora"/>
+
+
+
+
+<Route element={<ProvedorGerenteMineradora><RotasGerenteMineradora/></ProvedorGerenteMineradora>}>
+    <Route element={<AdministrarPatrocínios/>} path="administrar-patrocinios"/>
+    <Route element={<CadastrarPatrocínio/>} path="cadastrar-patrocinio"/>
+
+</Route>
+
+
 
 </Route>
 </Routes>
