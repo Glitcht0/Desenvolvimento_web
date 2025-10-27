@@ -39,6 +39,7 @@ const opçõesGerenteTecnologia = [
  { label: "Cadastrar Usuário", command: () => navegar("/atualizar-usuario"),
  disabled: usuárioLogado.status !== "ativo"},
  { label: "Cadastrar Gerente Tecnologia", command: () => navegar("/cadastrar-gerente-tecnologia")},
+ { label: "Administrar Interesses", command: () => navegar("/administrar-Participacoes-Mineracao") },
  { label: "Sair do Sistema", command: () => sairSistema()},
  ]},
  ];

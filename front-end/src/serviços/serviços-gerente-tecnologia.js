@@ -41,7 +41,7 @@ export function serviçoBuscarGerenteTecnologia(cpf) {
 
 export function serviçoCadastrarParticipaçãoMineração(participacao) {
     // Corresponde à rota: RotasGerenteTecnologia.post("/participação-mineração", ...)
-    return servidor.post("/gerente-tecnologia/participação-mineração", participacao, {
+    return servidor.post("/gerente-tecnologia/participacao-mineracao", participacao, {
         headers: {
             Authorization: window?.localStorage?.getItem('token') || undefined
         }
@@ -50,7 +50,7 @@ export function serviçoCadastrarParticipaçãoMineração(participacao) {
 
 export function serviçoRemoverInteresse(id) {
     // Corresponde à rota: RotasGerenteTecnologia.delete("/participação-mineração/:id", ...)
-    return servidor.delete(`/gerente-tecnologia/participação-mineração/${id}`, {
+    return servidor.delete(`/gerente-tecnologia/participacao-mineracao/${id}`, {
         headers: {
             Authorization: window?.localStorage?.getItem('token') || undefined
         }
@@ -59,7 +59,7 @@ export function serviçoRemoverInteresse(id) {
 
 export function serviçoBuscarParticipaçõesMineraçãoGerenteTecnologia(cpf) {
     // Corresponde à rota: RotasGerenteTecnologia.get("/participação-mineração/gerente-tecnologia/:cpf", ...)
-    return servidor.get(`/gerente-tecnologia/participação-mineração/gerente-tecnologia/${cpf}`, {
+    return servidor.get(`/gerente-tecnologia/participacao-mineracao/gerente-tecnologia/${cpf}`, {
         headers: {
             Authorization: window?.localStorage?.getItem('token') || undefined
         }
@@ -69,7 +69,7 @@ export function serviçoBuscarParticipaçõesMineraçãoGerenteTecnologia(cpf) {
 export function serviçoBuscarPatrocínios() {
     // Corresponde à rota: RotasGerenteTecnologia.get("/participação-mineração/Patroocínio/", ...)
     // ATENÇÃO: A URL usa "Patroocínio" (com dois 'o') para bater com a sua rota do backend.
-    return servidor.get("/gerente-tecnologia/participação-mineração/Patroocínio/", {
+    return servidor.get("/gerente-tecnologia/participacao-mineracao/Patrocínio/", {
         headers: {
             Authorization: window?.localStorage?.getItem('token') || undefined
         }

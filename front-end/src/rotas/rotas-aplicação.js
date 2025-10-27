@@ -12,11 +12,17 @@ import CadastrarGerenteTecnologia from "../páginas/gerente-tecnologia/cadastrar
 //🗡️============================================================================//🗡️
 
 import RotasGerenteMineradora from "./rotas-gerente-mineradora";
-
 import { ProvedorGerenteMineradora } from "../contextos/contexto-gerente-mineradora";
-
 import AdministrarPatrocínios from "../páginas/gerente-mineradora/administrar-patrocínios"; 
 import CadastrarPatrocínio from "../páginas/gerente-mineradora/cadastrar-patrocínio";
+
+import RotasGerenteTecnologia from "./rotas-gerente-tecnologia";
+import { ProvedorGerenteTecnologia } from "../contextos/contexto-gerente-tecnologia";
+import AdministrarParticipaçõesMineração from "../páginas/gerente-tecnologia/administrar-participações-mineração"; 
+
+
+
+
 
 //🗡️============================================================================//🗡️
 export default function RotasAplicação() {
@@ -42,6 +48,12 @@ return (
     <Route element={<CadastrarPatrocínio/>} path="cadastrar-patrocinio"/>
 
 </Route>
+
+
+<Route element={<ProvedorGerenteTecnologia><RotasGerenteTecnologia/></ProvedorGerenteTecnologia>}>
+        <Route element={<AdministrarParticipaçõesMineração/>} path="administrar-Participacoes-Mineracao"/>
+        {/* Adicione as outras rotas do Gerente Tecnologia aqui (ex: cadastrar-interesse) */}
+    </Route>
 
 
 
