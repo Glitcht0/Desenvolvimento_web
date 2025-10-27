@@ -8,3 +8,5 @@ return (
 }}>{children}</ContextoGerenteMineradora.Provider>
 );
 }
+
+

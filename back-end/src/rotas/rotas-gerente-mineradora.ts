@@ -14,11 +14,11 @@ RotasGerenteMineradora.patch("/", verificarToken, verificarPerfilGerenteMinerado
 
 
  //🗡️ ------------------------------------- 🗡️
-RotasGerenteMineradora.post("/patrocínio", verificarToken, verificarPerfilGerenteMineradora, ServiçosGerenteMineradora.cadastrarPatrocínio);
-RotasGerenteMineradora.patch("/patrocínio", verificarToken, verificarPerfilGerenteMineradora, ServiçosGerenteMineradora.alterarPatrocínio);
-RotasGerenteMineradora.delete("/patrocínio/:id", verificarToken, verificarPerfilGerenteMineradora, ServiçosGerenteMineradora.removerPatrocínio);
-RotasGerenteMineradora.get("/patrocínio/gerente-mineradora/:cpf", verificarToken, verificarPerfilGerenteMineradora, ServiçosGerenteMineradora.buscarPatrocínioGerenteMineradora);
-RotasGerenteMineradora.get("/patrocínio/áreas-atuacao/", verificarToken, verificarPerfilGerenteMineradora, ServiçosGerenteMineradora.buscarÁreasAtuaçãoPatrocínio);
+RotasGerenteMineradora.post("/patrocinio", verificarToken, verificarPerfilGerenteMineradora, ServiçosGerenteMineradora.cadastrarPatrocínio);
+RotasGerenteMineradora.patch("/patrocinio", verificarToken, verificarPerfilGerenteMineradora, ServiçosGerenteMineradora.alterarPatrocínio);
+RotasGerenteMineradora.delete("/patrocinio/:id", verificarToken, verificarPerfilGerenteMineradora, ServiçosGerenteMineradora.removerPatrocínio);
+RotasGerenteMineradora.get("/patrocinio/gerente-mineradora/:cpf", verificarToken, verificarPerfilGerenteMineradora, ServiçosGerenteMineradora.buscarPatrocínioGerenteMineradora);
+RotasGerenteMineradora.get("/patrocinio/areas-atuacao/", verificarToken, verificarPerfilGerenteMineradora, ServiçosGerenteMineradora.buscarÁreasAtuaçãoPatrocínio);
 
 
  //🗡️ ------------------------------------- 🗡️

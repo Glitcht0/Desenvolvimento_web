@@ -12,27 +12,27 @@ export function serviçoAtualizarGerenteMineradora(gerentemineradora)
 
 export function serviçoCadastrarPatrocínio(patrocínio) { 
     // Corresponde à rota: RotasGerenteMineradora.post("/patrocínio", ...)
-    return servidor.post("/gerente-mineradora/patrocínio", patrocínio); 
+    return servidor.post("/gerente-mineradora/patrocinio", patrocínio); 
 };
 
 export function serviçoAlterarPatrocínio(patrocínio) { 
     // Corresponde à rota: RotasGerenteMineradora.patch("/patrocínio", ...)
-    return servidor.patch("/gerente-mineradora/patrocínio", patrocínio); 
+    return servidor.patch("/gerente-mineradora/patrocinio", patrocínio); 
 };
 
 export function serviçoRemoverPatrocínio(id) { 
     // Corresponde à rota: RotasGerenteMineradora.delete("/patrocínio/:id", ...)
-    return servidor.delete(`/gerente-mineradora/patrocínio/${id}`); 
+    return servidor.delete(`/gerente-mineradora/patrocinio/${id}`); 
 };
 
 export function serviçoBuscarPatrocínioGerenteMineradora(cpf) { 
     // Corresponde à rota: RotasGerenteMineradora.get("/patrocínio/gerente-mineradora/:cpf", ...)
-    return servidor.get(`/gerente-mineradora/patrocínio/gerente-mineradora/${cpf}`); 
+    return servidor.get(`/gerente-mineradora/patrocinio/gerente-mineradora/${cpf}`); 
 };
 
 export function serviçoBuscarÁreasAtuaçãoPatrocínio() { 
     // Corresponde à rota: RotasGerenteMineradora.get("/patrocínio/áreas-atuacao/", ...)
-    return servidor.get("/gerente-mineradora/patrocínio/áreas-atuacao/"); 
+    return servidor.get("/gerente-mineradora/patrocinio/areas-atuacao/"); 
 };
 
 //🗡️ ------------------------------------- 🗡️

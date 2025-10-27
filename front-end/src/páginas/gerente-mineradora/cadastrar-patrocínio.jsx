@@ -5,6 +5,7 @@ import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Toast } from "primereact/toast";
+import { Checkbox } from "primereact/checkbox";
 
 import ContextoUsuário from "../../contextos/contexto-usuário";
 import ContextoGerente from "../../contextos/contexto-gerente-mineradora"; // ou o contexto correto
@@ -38,17 +39,17 @@ export default function CadastrarPatrocínio() {
   const { patrocínioConsultado } = useContext(ContextoGerente);
 
   const [dados, setDados] = useState({
-    necessidade_bolsa: patrocínioConsultado?.necessidade_bolsa || "",
+    necessidade_bolsa: patrocínioConsultado?.necessidade_bolsa || false, // <-- Mude para 'false'
     justificativa: patrocínioConsultado?.justificativa || ""
-  });
-
+    });
   const [erros, setErros] = useState({});
   const navegar = useNavigate();
 
   function alterarEstado(event) {
-    const chave = event.target.name;
-    const valor = event.target.value;
-    setDados({ ...dados, [chave]: valor });
+  const chave = event.target.name;
+      // Se for um checkbox, pega 'checked'. Se não, pega 'value'.
+  const valor = event.target.type === 'checkbox' ? event.target.checked : event.target.value; 
+  setDados({ ...dados, [chave]: valor });
   }
 
   function validarCampos() {
@@ -59,7 +60,7 @@ export default function CadastrarPatrocínio() {
   }
 
   function retornarAdministrarPatrocínios() {
-    navegar("../administrar-patrocínios");
+    navegar("../administrar-patrocinios");
   }
 
   async function cadastrar() {
@@ -122,12 +123,11 @@ export default function CadastrarPatrocínio() {
       <Card title={títuloFormulário()} className={estilizarCard(usuárioLogado.cor_tema)}>
         <div className={estilizarDivCampo()}>
           <label className={estilizarLabel(usuárioLogado.cor_tema)}>Necessidade de Bolsa*:</label>
-          <InputText
+          <Checkbox
             name="necessidade_bolsa"
-            className={estilizarInputText(erros.necessidade_bolsa, 400, usuárioLogado.cor_tema)}
-            value={dados.necessidade_bolsa}
+            checked={dados.necessidade_bolsa} // Use 'checked' em vez de 'value'
             onChange={alterarEstado}
-          />
+            />
           <MostrarMensagemErro mensagem={erros.necessidade_bolsa} />
         </div>
 

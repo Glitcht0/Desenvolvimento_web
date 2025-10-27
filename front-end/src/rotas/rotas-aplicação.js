@@ -13,7 +13,8 @@ import CadastrarGerenteTecnologia from "../páginas/gerente-tecnologia/cadastrar
 
 import RotasGerenteMineradora from "./rotas-gerente-mineradora";
 
-import ProvedorGerenteMineradora from "../contextos/contexto-gerente-mineradora";
+import { ProvedorGerenteMineradora } from "../contextos/contexto-gerente-mineradora";
+
 import AdministrarPatrocínios from "../páginas/gerente-mineradora/administrar-patrocínios"; 
 import CadastrarPatrocínio from "../páginas/gerente-mineradora/cadastrar-patrocínio";
 

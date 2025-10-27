@@ -31,6 +31,9 @@ export default class ServiçosGerenteMineradora {
       await Patrocínio.create({
         necessidade_bolsa,
         justificativa,
+        gerentemineradora: gerente
+        
+        
         
       }).save();
 
