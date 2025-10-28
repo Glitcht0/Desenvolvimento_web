@@ -126,6 +126,10 @@ export default function AdministrarParticipaçõesMineração() {
         return () => (desmontado = true);
     }, [usuárioLogado.cpf]);
 
+
+
+
+    
     return (
         <div className={estilizarFlex()}>
             <Toast ref={referênciaToast} position="bottom-center" />

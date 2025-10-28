@@ -13,7 +13,7 @@ RotasGerenteTecnologia.get("/:cpf", verificarToken, verificarPerfilGerenteTecnol
 
 //🗡️ ------------------------------------- 🗡️
 RotasGerenteTecnologia.post("/participacao-mineracao", verificarToken, verificarPerfilGerenteTecnologia, ServiçosGerenteTecnologia.cadastrarParticipaçãoMineração);
-RotasGerenteTecnologia.delete("/participacao-mineracao/:id", verificarToken, verificarPerfilGerenteTecnologia, ServiçosGerenteTecnologia.removerInteresse);
+RotasGerenteTecnologia.delete("/participacao-mineracao/:id", verificarToken, verificarPerfilGerenteTecnologia, ServiçosGerenteTecnologia.removerParticipaçãoMineração);
 RotasGerenteTecnologia.get("/participacao-mineracao/gerente-tecnologia/:cpf", verificarToken, verificarPerfilGerenteTecnologia, ServiçosGerenteTecnologia.buscarParticipaçõesMineraçãoGerenteTecnologia);
 RotasGerenteTecnologia.get("/participacao-mineracao/Patrocinio/", verificarToken, verificarPerfilGerenteTecnologia, ServiçosGerenteTecnologia.buscarPatrocínios);
 //🗡️ ------------------------------------- 🗡️

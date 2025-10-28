@@ -53,7 +53,7 @@ static async cadastrarParticipaçãoMineração(request, response) {
 
 
 //🗡️ -----------------2-------------------- 🗡️
-static async removerInteresse(request, response) {
+static async removerParticipaçãoMineração(request, response) {
   try {
     const id = request.params.id;
     await ParticipaçãoMineração.delete(id);

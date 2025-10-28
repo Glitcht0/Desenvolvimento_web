@@ -48,7 +48,7 @@ export function serviçoCadastrarParticipaçãoMineração(participacao) {
     });
 };
 
-export function serviçoRemoverInteresse(id) {
+export function serviçoRemoverParticipaçãoMineração(id) {
     // Corresponde à rota: RotasGerenteTecnologia.delete("/participação-mineração/:id", ...)
     return servidor.delete(`/gerente-tecnologia/participacao-mineracao/${id}`, {
         headers: {
@@ -69,7 +69,7 @@ export function serviçoBuscarParticipaçõesMineraçãoGerenteTecnologia(cpf) {
 export function serviçoBuscarPatrocínios() {
     // Corresponde à rota: RotasGerenteTecnologia.get("/participação-mineração/Patroocínio/", ...)
     // ATENÇÃO: A URL usa "Patroocínio" (com dois 'o') para bater com a sua rota do backend.
-    return servidor.get("/gerente-tecnologia/participacao-mineracao/Patrocínio/", {
+    return servidor.get("/gerente-tecnologia/participacao-mineracao/Patrocinio/", {
         headers: {
             Authorization: window?.localStorage?.getItem('token') || undefined
         }
