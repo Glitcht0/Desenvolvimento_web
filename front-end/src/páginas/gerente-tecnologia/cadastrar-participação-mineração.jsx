@@ -41,13 +41,18 @@ import {
 export default function CadastrarParticipaçãoMineração() {
   const referênciaToast = useRef(null);
   const { usuárioLogado } = useContext(ContextoUsuário);
-  const { participaçãoConsultada, patrocínioSelecionado } = useContext(ContextoGerenteTecnologia);
+  const { participaçãoMineraçãoConsultado, PatrocínioSelecionada } = useContext(ContextoGerenteTecnologia);
 
   const [dados, setDados] = useState({
-    id_patrocínio: patrocínioSelecionado?.id || "",
-    necessidade_bolsa: participaçãoConsultada?.necessidade_bolsa || "",
-    justificativa: participaçãoConsultada?.justificativa || "",
+    id_patrocínio: PatrocínioSelecionada?.id || "",
+    título: PatrocínioSelecionada?.título || "",
+    necessidade_bolsa: participaçãoMineraçãoConsultado?.necessidade_bolsa || false,
+    justificativa: participaçãoMineraçãoConsultado?.justificativa || "",
+    área_atuação: participaçãoMineraçãoConsultado?.área_atuação || "",
+    data_início: participaçãoMineraçãoConsultado?.data_início || "",
+    descrição: participaçãoMineraçãoConsultado?.descrição || "",
   });
+
 
   const [erros, setErros] = useState({});
   const navegar = useNavigate();
@@ -59,14 +64,15 @@ export default function CadastrarParticipaçãoMineração() {
   }
 
   function validarCampos() {
-    const { justificativa } = dados;
-    const errosCamposObrigatórios = validarCamposObrigatórios({ justificativa });
+    const { título, justificativa } = dados;
+    const errosCamposObrigatórios = validarCamposObrigatórios({ título, justificativa });
     setErros(errosCamposObrigatórios);
     return checarListaVazia(errosCamposObrigatórios);
   }
 
+
   function patrocínioLabel() {
-    if (participaçãoConsultada?.título_patrocínio || patrocínioSelecionado)
+    if (participaçãoMineraçãoConsultado?.título_patrocínio || PatrocínioSelecionada)
       return "Patrocínio Selecionado*:";
     else return "Selecione um Patrocínio*:";
   }
@@ -92,7 +98,7 @@ export default function CadastrarParticipaçãoMineração() {
 
   async function removerParticipação() {
     try {
-      await serviçoRemoverParticipaçãoMineração(participaçãoConsultada.id);
+      await serviçoRemoverParticipaçãoMineração(participaçãoMineraçãoConsultado.id);
       mostrarToast(referênciaToast, "Participação removida com sucesso!", "sucesso");
     } catch (error) {
       mostrarToast(referênciaToast, error.response.data.erro, "erro");
@@ -100,7 +106,7 @@ export default function CadastrarParticipaçãoMineração() {
   }
 
   function BotõesAções() {
-    if (participaçãoConsultada) {
+    if (participaçãoMineraçãoConsultado) {
       return (
         <div className={estilizarInlineFlex()}>
           <Button
@@ -134,26 +140,26 @@ export default function CadastrarParticipaçãoMineração() {
   }
 
   function títuloFormulário() {
-    if (participaçãoConsultada) return "Remover Participação";
+    if (participaçãoMineraçãoConsultado) return "Remover Participação";
     else return "Cadastrar Participação";
   }
 
   function PatrocínioInputText() {
-    if (patrocínioSelecionado?.título) {
+    if (PatrocínioSelecionada?.título) {
       return (
         <InputText
           name="título_patrocínio"
           className={estilizarInputText(erros.título_patrocínio, 400, usuárioLogado.cor_tema)}
-          value={patrocínioSelecionado?.título}
+          value={PatrocínioSelecionada?.título}
           disabled
         />
       );
-    } else if (participaçãoConsultada?.patrocínio?.título) {
+    } else if (participaçãoMineraçãoConsultado?.patrocínio?.título) {
       return (
         <InputText
           name="título_patrocínio"
           className={estilizarInputText(erros.título_patrocínio, 400, usuárioLogado.cor_tema)}
-          value={participaçãoConsultada?.patrocínio?.título}
+          value={participaçãoMineraçãoConsultado?.patrocínio?.título}
           disabled
         />
       );
@@ -161,7 +167,7 @@ export default function CadastrarParticipaçãoMineração() {
   }
 
   function BotãoSelecionar() {
-    if (!patrocínioSelecionado && !participaçãoConsultada) {
+    if (!PatrocínioSelecionada && !participaçãoMineraçãoConsultado) {
       return (
         <Button
           className={estilizarBotão()}
@@ -169,7 +175,7 @@ export default function CadastrarParticipaçãoMineração() {
           onClick={pesquisarPatrocínios}
         />
       );
-    } else if (patrocínioSelecionado) {
+    } else if (PatrocínioSelecionada) {
       return (
         <Button
           className={estilizarBotão()}
@@ -209,6 +215,66 @@ export default function CadastrarParticipaçãoMineração() {
             autoResize
           />
         </div>
+
+
+        <div className={estilizarDivCampo()}>
+          <label className={estilizarLabel(usuárioLogado.cor_tema)}>
+            Título*:
+          </label>
+          <InputText
+            name="título"
+            value={dados.título}
+            className={estilizarInputText(erros.título, 400, usuárioLogado.cor_tema)}
+            onChange={alterarEstado}
+          />
+          <MostrarMensagemErro mensagem={erros.título} />
+        </div>
+
+        <div className={estilizarDivCampo()}>
+          <label className={estilizarLabel(usuárioLogado.cor_tema)}>
+            Área de Atuação*:
+          </label>
+          <InputText
+            name="área_atuação"
+            value={dados.área_atuação || ""}
+            className={estilizarInputText(erros.área_atuação, 400, usuárioLogado.cor_tema)}
+            onChange={alterarEstado}
+          />
+          <MostrarMensagemErro mensagem={erros.área_atuação} />
+        </div>
+
+
+        <div className={estilizarDivCampo()}>
+          <label className={estilizarLabel(usuárioLogado.cor_tema)}>
+            Descrição:
+          </label>
+          <InputTextarea
+            name="descrição"
+            value={dados.descrição || ""}
+            className={estilizarInputTextarea(erros.descrição, usuárioLogado.cor_tema)}
+            onChange={alterarEstado}
+            autoResize
+            cols={40}
+          />
+          <MostrarMensagemErro mensagem={erros.descrição} />
+        </div>
+
+
+        <div className={estilizarDivCampo()}>
+          <label className={estilizarLabel(usuárioLogado.cor_tema)}>
+            Data de Início*:
+          </label>
+          <InputText
+            type="date"
+            name="data_início"
+            value={dados.data_início || ""}
+            className={estilizarInputText(erros.data_início, 200, usuárioLogado.cor_tema)}
+            onChange={alterarEstado}
+          />
+          <MostrarMensagemErro mensagem={erros.data_início} />
+        </div>
+
+
 
         <div className={estilizarDivCampo()}>
           <label className={estilizarLabel(usuárioLogado.cor_tema)}>

@@ -42,7 +42,7 @@ export default function AdministrarParticipaçõesMineração() {
     const navegar = useNavigate();
 
     const { usuárioLogado } = useContext(ContextoUsuário);
-    const { ParticipaçãoMineraçãoConsultado, setParticipaçãoMineraçãoConsultado, setPatrocínioSelecionada } =
+    const {  participaçãoMineraçãoConsultado, setParticipaçãoMineraçãoConsultado, setPatrocínioSelecionada } =
         useContext(ContextoGerenteTecnologia);
 
     const [listaParticipaçõesMineração, setListaParticipaçõesMineração] = useState([]);
@@ -80,7 +80,7 @@ export default function AdministrarParticipaçõesMineração() {
                 icon="pi pi-search"
                 className={estilizarBotãoTabela(
                     usuárioLogado.cor_tema,
-                    ParticipaçãoMineraçãoConsultado?.id === participação.id
+                    participaçãoMineraçãoConsultado?.id === participação.id
                 )}
                 tooltip="Consultar Participação Mineração"
                 tooltipOptions={{ position: 'top' }}
@@ -115,16 +115,29 @@ export default function AdministrarParticipaçõesMineração() {
 
         async function buscarParticipaçõesMineração() {
             try {
+                console.log("[CLIENTE] 📡 Buscando participações do CPF:", usuárioLogado.cpf);
                 const response = await serviçoBuscarParticipaçõesMineraçãoGerenteTecnologia(usuárioLogado.cpf);
+                
+                console.log("[CLIENTE] 📥 Resposta bruta da API:", response);
+                console.log("[CLIENTE] 📦 Dados recebidos (response.data):", response?.data);
+
+                if (Array.isArray(response?.data)) {
+                    console.log(`[CLIENTE] ✅ ${response.data.length} participações recebidas`);
+                } else {
+                    console.warn("[CLIENTE] ⚠️ O retorno não é um array:", typeof response?.data);
+                }
+
                 if (!desmontado && response.data) setListaParticipaçõesMineração(response.data);
             } catch (error) {
-                mostrarToast(referênciaToast, error.response.data.erro, "error");
+                console.error("[CLIENTE] ❌ Erro ao buscar participações:", error);
+                mostrarToast(referênciaToast, error.response?.data?.erro || "Erro desconhecido", "error");
             }
         }
 
         buscarParticipaçõesMineração();
         return () => (desmontado = true);
     }, [usuárioLogado.cpf]);
+
 
 
 
@@ -140,7 +153,6 @@ export default function AdministrarParticipaçõesMineração() {
                     size="small"
                     paginator
                     rows={TAMANHOS.MAX_LINHAS_TABELA}
-                    // Corrigido: Mensagem de tabela vazia
                     emptyMessage="Nenhuma participação encontrada."
                     value={listaParticipaçõesMineração}
                     responsiveLayout="scroll"
@@ -154,55 +166,39 @@ export default function AdministrarParticipaçõesMineração() {
                         body={ConsultarTemplate}
                         headerClassName={estilizarColumnHeader(usuárioLogado.cor_tema)}
                     />
-                    
-                    {/* Corrigido: Colunas da tabela para refletir sua entidade ParticipaçãoMineração */}
-                    
+
+                    {/* Campos reais conforme o backend */}
                     <Column
-                        // Baseado no seu back-end (serviços-gerente-tecnologia.ts)
-                        field="gerente_mineradora.usuário.nome" 
-                        header="Gerente da Mineradora" // Título corrigido
+                        field="título"
+                        header="Título"
+                        sortable
                         filter
                         showFilterOperator={false}
                         headerClassName={estilizarColumnHeader(usuárioLogado.cor_tema)}
-                        sortable
                     />
                     <Column
-                        field="categoria" // Campo direto da entidade ParticipaçãoMineração
-                        header="Categoria"
-                        filter
-                        filterMatchMode="equals"
-                        filterElement={DropdownÁreaTemplate}
-                        showClearButton={false}
-                        showFilterOperator={false}
-                        showFilterMatchModes={false}
-                        filterMenuClassName={estilizarFilterMenu()}
-                        showFilterMenuOptions={false}
-                        sortable
-                        headerClassName={estilizarColumnHeader(usuárioLogado.cor_tema)}
-                    />
-                    <Column
-                        field="título" // Campo direto da entidade ParticipaçãoMineração
-                        header="Título da Participação" // Título corrigido
-                        filter
-                        showFilterOperator={false}
-                        headerClassName={estilizarColumnHeader(usuárioLogado.cor_tema)}
-                        sortable
-                    />
-                    <Column
-                        field="área_atuação" // Adicionando um campo que existe na sua entidade
+                        field="área_atuação"
                         header="Área de Atuação"
+                        sortable
                         filter
                         showFilterOperator={false}
                         headerClassName={estilizarColumnHeader(usuárioLogado.cor_tema)}
-                        sortable
                     />
-                    
-                    {/* // Removida: Coluna "Necessidade de bolsa"
-                    // O campo 'necessidade_bolsa' não existe na sua entidade 'ParticipaçãoMineração'.
-                    // Você pode adicionar outra coluna aqui se desejar.
-                    */}
-                    
+                    <Column
+                        field="data_início"
+                        header="Data de Início"
+                        sortable
+                        headerClassName={estilizarColumnHeader(usuárioLogado.cor_tema)}
+                        body={(rowData) => new Date(rowData.data_início).toLocaleDateString()}
+                    />
+                    <Column
+                        field="descrição"
+                        header="Descrição"
+                        sortable
+                        headerClassName={estilizarColumnHeader(usuárioLogado.cor_tema)}
+                    />
                 </DataTable>
+
                 <Divider className={estilizarDivider()} />
                 <Button
                     className={estilizarBotãoRetornar()}

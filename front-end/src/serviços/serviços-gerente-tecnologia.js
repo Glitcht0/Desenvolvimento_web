@@ -40,7 +40,8 @@ export function serviçoBuscarGerenteTecnologia(cpf) {
 // Serviços para Participação Mineração (análogo ao Interesse do Aluno)
 
 export function serviçoCadastrarParticipaçãoMineração(participacao) {
-    // Corresponde à rota: RotasGerenteTecnologia.post("/participação-mineração", ...)
+    console.log("📦 Enviando participação:", participacao); // debug
+
     return servidor.post("/gerente-tecnologia/participacao-mineracao", participacao, {
         headers: {
             Authorization: window?.localStorage?.getItem('token') || undefined

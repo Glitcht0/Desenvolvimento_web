@@ -2,6 +2,7 @@ import { BaseEntity, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGen
 from "typeorm";
 import Usuário from "./usuário";
 import Patrocínio from "./patrocínio";
+import ParticipaçãoMineração from "./participação-mineração";
 export enum Titulacao  { GerenteTecnologia = "Gerente Tecnologia", GerenteInovação = "Gerente Inovação", EngenheiroSistemasSênior = "Engenheiro Sistemas Sênior", LíderEquipeDesenvolvimento = "Líder Equipe Desenvolvimento" };
 
 @Entity()
@@ -21,6 +22,12 @@ telefone: string;
 
 @OneToMany(() => Patrocínio, (patrocínio) => patrocínio.gerentetecnologia)
 patrocínios: Patrocínio[];
+
+@OneToMany(
+  () => ParticipaçãoMineração,
+  (participação) => participação.gerente_tecnologia
+)
+participações_mineração: ParticipaçãoMineração[];
 
 @OneToOne(() => Usuário, usuário => usuário.gerentetecnologia, { onDelete: "CASCADE" })
 @JoinColumn()

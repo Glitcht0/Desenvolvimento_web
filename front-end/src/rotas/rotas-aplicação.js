@@ -54,7 +54,7 @@ return (
         <Route element={<AdministrarParticipaçõesMineração/>} path="administrar-Participacoes-Mineracao"/>
         <Route element={<CadastrarParticipaçãoMineração/>} path="cadastrar-participacao-mineracao"/>
         <Route element={<PesquisarPatrocínios/>} path="pesquisar-patrocinios"/>
-        <Route element={<ConsultarPatrocínio/>} path="consultar-participacao-mineracao"/>
+        <Route element={<ConsultarPatrocínio/>} path="consultar-patrocinio"/>
     </Route>
 
 

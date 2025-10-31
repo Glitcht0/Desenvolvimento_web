@@ -29,8 +29,8 @@ export default function PesquisarPatrocínios() {
     // 2. CORRIGIDO: Desestruturar os estados de PATROCÍNIO do contexto
     // (Assumindo que os nomes no seu ProvedorGerenteTecnologia sejam estes)
     const { 
-        patrocínioConsultado, // <-- Mudou
-        setPatrocínioConsultado, // <-- Mudou
+        PatrocínioConsultada, // <-- Mudou
+        setPatrocínioConsultada, // <-- Mudou
         setPatrocínioSelecionada  // <-- Mudou (este nome já estava em administrar-participações)
     } = useContext(ContextoGerenteTecnologia);
 
@@ -49,12 +49,12 @@ export default function PesquisarPatrocínios() {
     function retornarCadastrarPatrocínio(){
         // 3. CORRIGIDO: Define o PATROCÍNIO selecionado ao retornar
         // (O nome "ParticipaçãoMineraçãoConsultada" não existe mais aqui)
-        if (setPatrocínioSelecionada && patrocínioConsultado) {
-            setPatrocínioSelecionada(patrocínioConsultado);
+        if (setPatrocínioSelecionada && PatrocínioConsultada) {
+            setPatrocínioSelecionada(PatrocínioConsultada);
         }
-        setPatrocínioConsultado(null); 
-        navegar("../cadastrar-patrocinio"); // <-- Rota parece estar errada, não deveria ser 'cadastrar-participacao-mineracao'?
-    };
+        setPatrocínioConsultada(null); 
+        navegar("../cadastrar-participacao-mineracao");
+     };
 
     // 4. CORRIGIDO: O argumento agora é 'patrocínio'
     function ConsultarTemplate(patrocínio) { 
@@ -63,13 +63,13 @@ export default function PesquisarPatrocínios() {
                 className={estilizarBotãoTabela(
                     usuárioLogado.cor_tema,
                     // 5. CORRIGIDO: Compara com o 'patrocínioConsultado'
-                    patrocínioConsultado?.id === patrocínio.id 
+                    PatrocínioConsultada?.id === patrocínio.id 
                 )}
                 tooltip="Consultar Patrocínio" // <-- Mudou
                 tooltipOptions={{ position: 'top' }} 
                 onClick={() => {
                     // 6. CORRIGIDO: Define o 'patrocínioConsultado'
-                    setPatrocínioConsultado(patrocínio); 
+                    setPatrocínioConsultada(patrocínio); 
                     // 7. CORRIGIDO: Navega para a rota de CONSULTAR PATROCÍNIO
                     navegar("../consultar-patrocinio"); 
                 }}

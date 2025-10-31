@@ -17,36 +17,51 @@ constructor() {}
 static async cadastrarParticipaçãoMineração(request, response) {
   try {
     const { título, categoria, área_atuação, data_início, descrição, resultado, cpf } = request.body;
+    console.log("📥 Dados recebidos:", request.body);
+    
 
     const cpf_encriptado = md5(cpf);
+    console.log("🔐 CPF encriptado:", cpf_encriptado);
 
-    // Buscar gerente mineradora pelo usuário
-    const gerente_mineradora = await GerenteMineradora.findOne({ where: { usuário: cpf_encriptado } });
-    if (!gerente_mineradora) return response.status(404).json({ erro: "Gerente mineradora não encontrado." });
-
-    // Checar se já existe participação igual
-    const participaçõesMineração = await ParticipaçãoMineração.find({
-      where: { gerente_mineradora, título }
+    const gerente_tecnologia = await GerenteTecnologia.findOne({
+      where: { usuário: { cpf: cpf_encriptado } },
+      relations: ["usuário"]
     });
-    if (participaçõesMineração.length > 0) 
-      return response.status(404).json({ erro: "O gerente já cadastrou essa participação de mineração." });
+    console.log("👤 Gerente tecnologia encontrado:", gerente_tecnologia);
 
-    // Criar participação
-    await ParticipaçãoMineração.create({
+    if (!gerente_tecnologia)
+      return response.status(404).json({ erro: "Gerente tecnologia não encontrado." });
+
+    const participaçõesMineração = await ParticipaçãoMineração.find({
+      where: { gerente_tecnologia, título }
+    });
+    console.log("🔎 Participações existentes:", participaçõesMineração);
+
+    if (participaçõesMineração.length > 0)
+      return response.status(400).json({ erro: "O gerente já cadastrou essa participação de mineração." });
+
+    const nova = ParticipaçãoMineração.create({
       título,
       categoria,
       área_atuação,
       data_início: new Date(data_início),
       descrição,
       resultado,
-      gerente_mineradora
-    }).save();
+      gerente_tecnologia
+    });
+    console.log("🧱 Nova participação:", nova);
 
-    return response.json();
+    await nova.save();
+    console.log("✅ Participação salva com sucesso!");
+
+    return response.json({ sucesso: true });
   } catch (error) {
-    return response.status(500).json({ erro: "Erro BD : cadastrarParticipaçãoMineração" });
+    console.error("💥 Erro detalhado ao cadastrar participação:", error);
+    
+    return response.status(500).json({ erro: "Erro BD : cadastrarParticipaçãoMineração", detalhe: error.message });
   }
-};
+}
+
 
   //🗡️ ------------------------------------- 🗡️
 
@@ -67,18 +82,29 @@ static async removerParticipaçãoMineração(request, response) {
 static async buscarParticipaçõesMineraçãoGerenteTecnologia(request, response) {
   try {
     const cpf_encriptado = md5(request.params.cpf);
-    // Buscar participações onde o gerente_mineradora.usuário.cpf = cpf_encriptado
+    console.log("[server] 📡 Buscando participações do CPF:", request.params.cpf);
+    console.log("[server] 🔐 CPF encriptado:", cpf_encriptado);
+
     const interesses = await ParticipaçãoMineração.createQueryBuilder('p')
-      .leftJoinAndSelect('p.gerente_mineradora', 'gm')
-      .leftJoinAndSelect('gm.usuário', 'u')
+      .leftJoinAndSelect('p.gerente_tecnologia', 'gt')
+      .leftJoinAndSelect('gt.usuário', 'u')
       .leftJoinAndSelect('p.patrocínios', 'pat')
-      .leftJoinAndSelect('pat.gerentetecnologia', 'gt')
-      .leftJoinAndSelect('gt.usuário', 'gtu')
+      .leftJoinAndSelect('pat.gerentemineradora', 'gm')
+      .leftJoinAndSelect('gm.usuário', 'gmu')
       .where('u.cpf = :cpf', { cpf: cpf_encriptado })
       .getMany();
+
+    console.log("[server] 📦 Participações encontradas:", interesses.length);
+    console.log("[server] 🧾 Dados retornados:", interesses);
+
     return response.json(interesses);
-  } catch (error) { return response.status(500).json({ erro: "Erro BD : buscarParticipaçõesMineraçãoGerente" }); }
-};
+  } catch (error) {
+    console.error("[server] 💥 Erro detalhado ao buscar participações:", error);
+    return response.status(500).json({ erro: "Erro BD : buscarParticipaçõesMineraçãoGerente", detalhe: error.message });
+  }
+}
+
+
 //🗡️ ------------------------------------- 🗡️
 
 
@@ -91,7 +117,9 @@ static async buscarPatrocínios(request, response) {
       "participações_mineração.gerente_mineradora",
       "participações_mineração.gerente_mineradora.usuário",
       "gerentetecnologia",
-      "gerentetecnologia.usuário"
+      "gerentetecnologia.usuário",
+      "gerentemineradora",
+      "gerentemineradora.usuário"
     ] });
     return response.json(propostas);
   } catch (error) { return response.status(500).json({ erro: "Erro BD : buscarPatrocínios" }); }

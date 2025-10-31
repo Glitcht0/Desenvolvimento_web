@@ -24,70 +24,43 @@ import {
   estilizarLabel
 } from "../../utilitários/estilos";
 
-// 1. CORRIGIDO: Nome do componente
 export default function ConsultarPatrocínio() {
-  const { usuarioLogado } = useContext(ContextoUsuario);
-  
-  // 2. CORRIGIDO: Obter o 'patrocínioConsultado' do contexto
-  const { patrocínioConsultado } = useContext(ContextoGerenteTecnologia); // <-- Mudou
+  const { usuárioLogado } = useContext(ContextoUsuario);
+  const { PatrocínioConsultada } = useContext(ContextoGerenteTecnologia);
   const navegar = useNavigate();
-
-  // 3. CORRIGIDO: Mapear os dados do PATROCÍNIO consultado
+   console.log("🔍 Dados recebidos do backend (PatrocínioConsultada):", PatrocínioConsultada);
   const dados = {
-    gerente: patrocínioConsultado?.gerente_mineradora?.usuario?.nome || "", // <-- Mudou
-    justificativa: patrocínioConsultado?.justificativa || "", // <-- Mudou
-    necessidade_bolsa: patrocínioConsultado?.necessidade_bolsa || false, // <-- Mudou
-    data_manifestacao: patrocínioConsultado?.data_manifestacao || "", // <-- Mudou
-    observacoes: patrocínioConsultado?.observacoes || "", // <-- Mudou (se existir no seu patrocínio)
-    status: patrocínioConsultado?.status || "" // <-- Mudou (se existir no seu patrocínio)
+    gerente: PatrocínioConsultada?.gerentemineradora?.usuário?.nome || "",
+    justificativa: PatrocínioConsultada?.justificativa || "",
+    necessidade_bolsa: PatrocínioConsultada?.necessidade_bolsa || false
   };
 
   function retornar() {
-    // 4. CORRIGIDO: Retornar para a tela de PESQUISA DE PATROCÍNIOS
-    navegar("../pesquisar-patrocinios"); // <-- Mudou
+    navegar("../pesquisar-patrocinios");
   }
 
   return (
     <div className={estilizarFlex()}>
-      {/* 5. CORRIGIDO: Título do Card */}
       <Card
-        title="Consultar Patrocínio" // <-- Mudou
-        className={estilizarCard(usuarioLogado.cor_tema)}
+        title="Consultar Patrocínio"
+        className={estilizarCard(usuárioLogado.cor_tema)}
       >
         {/* Gerente */}
         <div className={estilizarDivCampo()}>
-          <label className={estilizarLabel(usuarioLogado.cor_tema)}>Gerente Responsável:</label>
-          <InputText name="gerente" value={dados.gerente} disabled /* ... */ />
+          <label className={estilizarLabel(usuárioLogado.cor_tema)}>Gerente Responsável:</label>
+          <InputText name="gerente" value={dados.gerente} disabled />
         </div>
 
         {/* Justificativa */}
         <div className={estilizarDivCampo()}>
-          <label className={estilizarLabel(usuarioLogado.cor_tema)}>Justificativa:</label>
-          <InputTextarea name="justificativa" value={dados.justificativa} disabled /* ... */ />
+          <label className={estilizarLabel(usuárioLogado.cor_tema)}>Justificativa:</label>
+          <InputTextarea name="justificativa" value={dados.justificativa} disabled />
         </div>
 
         {/* Necessidade de Bolsa */}
         <div className={estilizarDivCampo()}>
-          <label className={estilizarLabel(usuarioLogado.cor_tema)}>Necessita Bolsa:</label>
-          <Checkbox name="necessidade_bolsa" checked={dados.necessidade_bolsa} disabled /* ... */ />
-        </div>
-
-        {/* Data */}
-        <div className={estilizarDivCampo()}>
-          <label className={estilizarLabel(usuarioLogado.cor_tema)}>Data da Manifestação:</label>
-          <InputText name="data_manifestacao" type="date" value={dados.data_manifestacao} disabled /* ... */ />
-        </div>
-
-        {/* Observações (MANTIDO, mas verifique sua entidade 'Patrocínio') */}
-        <div className={estilizarDivCampo()}>
-          <label className={estilizarLabel(usuarioLogado.cor_tema)}>Observações:</label>
-          <InputTextarea name="observacoes" value={dados.observacoes} disabled /* ... */ />
-        </div>
-
-        {/* Status (MANTIDO, mas verifique sua entidade 'Patrocínio') */}
-        <div className={estilizarDivCampo()}>
-          <label className={estilizarLabel(usuarioLogado.cor_tema)}>Status:</label>
-          <InputText name="status" value={dados.status} disabled /* ... */ />
+          <label className={estilizarLabel(usuárioLogado.cor_tema)}>Necessita Bolsa:</label>
+          <Checkbox name="necessidade_bolsa" checked={dados.necessidade_bolsa} disabled />
         </div>
 
         <Divider className={estilizarDivider()} />
