@@ -36,11 +36,11 @@ import {
 export default function CadastrarPatrocínio() {
   const referênciaToast = useRef(null);
   const { usuárioLogado } = useContext(ContextoUsuário);
-  const { patrocínioConsultado } = useContext(ContextoGerente);
+  const { patrocínioConsultada } = useContext(ContextoGerente);
 
   const [dados, setDados] = useState({
-    necessidade_bolsa: patrocínioConsultado?.necessidade_bolsa || false, // <-- Mude para 'false'
-    justificativa: patrocínioConsultado?.justificativa || ""
+    necessidade_bolsa: patrocínioConsultada?.necessidade_bolsa || false, // <-- Mude para 'false'
+    justificativa: patrocínioConsultada?.justificativa || ""
     });
   const [erros, setErros] = useState({});
   const navegar = useNavigate();
@@ -77,7 +77,7 @@ export default function CadastrarPatrocínio() {
   async function alterar() {
     if (validarCampos()) {
       try {
-        await serviçoAlterarPatrocínio({ ...dados, id: patrocínioConsultado.id });
+        await serviçoAlterarPatrocínio({ ...dados, id: patrocínioConsultada.id });
         mostrarToast(referênciaToast, "Patrocínio alterado com sucesso!", "sucesso");
       } catch (error) {
         mostrarToast(referênciaToast, error.response.data.erro, "error");
@@ -87,7 +87,7 @@ export default function CadastrarPatrocínio() {
 
   async function remover() {
     try {
-      await serviçoRemoverPatrocínio(patrocínioConsultado.id);
+      await serviçoRemoverPatrocínio(patrocínioConsultada.id);
       mostrarToast(referênciaToast, "Patrocínio removido com sucesso!", "sucesso");
     } catch (error) {
       mostrarToast(referênciaToast, error.response.data.erro, "error");
@@ -95,7 +95,7 @@ export default function CadastrarPatrocínio() {
   }
 
   function BotõesAções() {
-    if (patrocínioConsultado) {
+    if (patrocínioConsultada) {
       return (
         <div className={estilizarInlineFlex()}>
           <Button className={estilizarBotãoRetornar()} label="Retornar" onClick={retornarAdministrarPatrocínios} />
@@ -114,7 +114,7 @@ export default function CadastrarPatrocínio() {
   }
 
   function títuloFormulário() {
-    return patrocínioConsultado ? "Alterar Patrocínio" : "Cadastrar Patrocínio";
+    return patrocínioConsultada ? "Alterar Patrocínio" : "Cadastrar Patrocínio";
   }
 
   return (

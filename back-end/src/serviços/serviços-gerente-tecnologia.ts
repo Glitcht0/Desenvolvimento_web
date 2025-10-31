@@ -129,7 +129,6 @@ static async buscarPatrocínios(request, response) {
 
 
 
-
   
   static async cadastrarGerenteTecnologia(request, response) {
     try {
@@ -148,11 +147,6 @@ static async buscarPatrocínios(request, response) {
       return response.status(500).json({ erro: error });
     }
   }
-
-
-
-
-
 
 
   static async atualizarGerenteTecnologia(request, response) {
