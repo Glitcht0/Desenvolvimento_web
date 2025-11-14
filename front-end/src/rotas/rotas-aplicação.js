@@ -24,6 +24,12 @@ import PesquisarPatrocínios from "../páginas/gerente-tecnologia/pesquisar-patr
 import ConsultarPatrocínio from "../páginas/gerente-tecnologia/consultar-patrocínio";
 
 
+import PesquisarParticipaçõesMinerações from "../páginas/gerente-mineradora/pesquisar-participação-mineração";
+import ConsultarParticipaçãoMineração from "../páginas/gerente-mineradora/consultar-interesse";
+import ConsultarGerenteTenologia from "../páginas/gerente-mineradora/consultar-gerente-tecnologia";
+import ConsultarGerenteMineradora from "../páginas/gerente-tecnologia/consultar-gerente-mineradora";
+
+
 //🗡️============================================================================//🗡️
 export default function RotasAplicação() {
 return (
@@ -46,6 +52,9 @@ return (
 <Route element={<ProvedorGerenteMineradora><RotasGerenteMineradora/></ProvedorGerenteMineradora>}>
     <Route element={<AdministrarPatrocínios/>} path="administrar-patrocinios"/>
     <Route element={<CadastrarPatrocínio/>} path="cadastrar-patrocinio"/>
+    <Route element={<PesquisarParticipaçõesMinerações/>} path="pesquisar-participacao-mineracao"/>
+    <Route element={<ConsultarParticipaçãoMineração/>} path="consultar-participacao-mineracao"/>
+    <Route element={<ConsultarGerenteTenologia/>} path="consultar-gerente-tecnologia"/>
 
 </Route>
 
@@ -55,6 +64,7 @@ return (
         <Route element={<CadastrarParticipaçãoMineração/>} path="cadastrar-participacao-mineracao"/>
         <Route element={<PesquisarPatrocínios/>} path="pesquisar-patrocinios"/>
         <Route element={<ConsultarPatrocínio/>} path="consultar-patrocinio"/>
+        <Route element={<ConsultarGerenteMineradora/>} path="consultar-gerente-mineradora"/>
     </Route>
 
 

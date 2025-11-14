@@ -6,10 +6,11 @@ const [participaçãoMineraçãoConsultado, setParticipaçãoMineraçãoConsulta
 const [PatrocínioConsultada, setPatrocínioConsultada] = useState({});
 const [PatrocínioSelecionada, setPatrocínioSelecionada] = useState({});
 const [PatrocínioCandidatura, setPatrocínioCandidatura] = useState({});
+const [gerenteMineradoraProponente, setGerenteMineradoraProponente] = useState({});
 return (
 <ContextoGerenteTecnologia.Provider value={{
  participaçãoMineraçãoConsultado, setParticipaçãoMineraçãoConsultado, PatrocínioConsultada, setPatrocínioConsultada,
- PatrocínioSelecionada,setPatrocínioSelecionada, PatrocínioCandidatura, setPatrocínioCandidatura
+ PatrocínioSelecionada,setPatrocínioSelecionada, PatrocínioCandidatura, setPatrocínioCandidatura, gerenteMineradoraProponente, setGerenteMineradoraProponente
  }}>{children}</ContextoGerenteTecnologia.Provider>
  );
 }

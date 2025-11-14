@@ -9,9 +9,10 @@ import { Divider } from "primereact/divider";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 
-import ContextoUsuario from "../../contextos/contexto-usuário";
+import ContextoUsuário from "../../contextos/contexto-usuário";
 import ContextoGerenteTecnologia from "../../contextos/contexto-gerente-tecnologia";
 import {
+  estilizarBotão,
   estilizarBotãoRetornar,
   estilizarCard,
   estilizarCheckbox,
@@ -25,8 +26,8 @@ import {
 } from "../../utilitários/estilos";
 
 export default function ConsultarPatrocínio() {
-  const { usuárioLogado } = useContext(ContextoUsuario);
-  const { PatrocínioConsultada } = useContext(ContextoGerenteTecnologia);
+  const { usuárioLogado } = useContext(ContextoUsuário);
+  const { PatrocínioConsultada, setGerenteMineradoraProponente } = useContext(ContextoGerenteTecnologia);
   const navegar = useNavigate();
    console.log("🔍 Dados recebidos do backend (PatrocínioConsultada):", PatrocínioConsultada);
   const dados = {
@@ -38,6 +39,11 @@ export default function ConsultarPatrocínio() {
   function retornar() {
     navegar("../pesquisar-patrocinios");
   }
+  
+  function consultarGerenteMineradora() {
+  if (PatrocínioConsultada) setGerenteMineradoraProponente(PatrocínioConsultada.gerentemineradora);
+  navegar("../consultar-gerente-mineradora");
+  };
 
   return (
     <div className={estilizarFlex()}>
@@ -71,6 +77,10 @@ export default function ConsultarPatrocínio() {
             className={estilizarBotãoRetornar()}
             onClick={retornar}
           />
+        </div>
+
+        <div className={estilizarInlineFlex()}>
+          <Button className={estilizarBotão()} label="Gerente Mineradora" onClick={consultarGerenteMineradora}/>
         </div>
       </Card>
     </div>

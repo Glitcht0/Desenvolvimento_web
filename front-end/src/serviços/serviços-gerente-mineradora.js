@@ -35,4 +35,10 @@ export function serviçoBuscarÁreasAtuaçãoPatrocínio() {
     return servidor.get("/gerente-mineradora/patrocinio/areas-atuacao/"); 
 };
 
+export function serviçoBuscarParticipaçõesMineraçãoPatrocínio(id_patrocínio) {
+return servidor.get(`/professores/participacao-mineracao/${id_patrocínio}`); };
+
+export function serviçoBuscarParticipaçõesMineraçãoGerenteMineradora(cpf) {
+return servidor.get(`/gerente-mineradora/participacao-mineracao/gerente-mineradora/${cpf}`); };
+
 //🗡️ ------------------------------------- 🗡️

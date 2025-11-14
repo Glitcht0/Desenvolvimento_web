@@ -58,7 +58,8 @@ export default function CadastrarPatrocínio() {
     setErros(errosCampos);
     return checarListaVazia(errosCampos);
   }
-
+  function mostrarParticipaçõesMineração() { navegar("../pesquisar-participacao-mineracao"); };
+  
   function retornarAdministrarPatrocínios() {
     navegar("../administrar-patrocinios");
   }
@@ -101,6 +102,7 @@ export default function CadastrarPatrocínio() {
           <Button className={estilizarBotãoRetornar()} label="Retornar" onClick={retornarAdministrarPatrocínios} />
           <Button className={estilizarBotãoRemover()} label="Remover" onClick={remover} />
           <Button className={estilizarBotão()} label="Alterar" onClick={alterar} />
+          <Button className={estilizarBotão()} label="Participações Mineração" onClick={mostrarParticipaçõesMineração}/>
         </div>
       );
     } else {

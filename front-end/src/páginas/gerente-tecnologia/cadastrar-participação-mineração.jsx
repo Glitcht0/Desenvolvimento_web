@@ -41,7 +41,7 @@ import {
 export default function CadastrarParticipaçãoMineração() {
   const referênciaToast = useRef(null);
   const { usuárioLogado } = useContext(ContextoUsuário);
-  const { participaçãoMineraçãoConsultado, PatrocínioSelecionada } = useContext(ContextoGerenteTecnologia);
+  const { participaçãoMineraçãoConsultado, PatrocínioSelecionada, setPatrocínioParticipaçãoMineração, setPatocínioConsultada} = useContext(ContextoGerenteTecnologia);
 
   const [dados, setDados] = useState({
     id_patrocínio: PatrocínioSelecionada?.id || "",
@@ -76,6 +76,13 @@ export default function CadastrarParticipaçãoMineração() {
       return "Patrocínio Selecionado*:";
     else return "Selecione um Patrocínio*:";
   }
+
+
+  function consultarPatrocínioParticipaçãoMineração() {
+  setPatocínioConsultada(null);
+  setPatrocínioParticipaçãoMineração(participaçãoMineraçãoConsultado?.patrocínio);
+  navegar("../consultar-patrocínio");
+  };
 
   function pesquisarPatrocínios() {
     navegar("../pesquisar-patrocinios");
@@ -119,6 +126,7 @@ export default function CadastrarParticipaçãoMineração() {
             label="Remover"
             onClick={removerParticipação}
           />
+          <Button className={estilizarBotão()} label="Patrocínio" onClick={consultarPatrocínioParticipaçãoMineração}/>
         </div>
       );
     } else {

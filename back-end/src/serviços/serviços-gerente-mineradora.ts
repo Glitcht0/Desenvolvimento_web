@@ -5,6 +5,7 @@ import GerenteMineradora from "../entidades/gerente-mineradora";
 import ServiçosUsuário from "./serviços-usuário";
 
 import Patrocínio from "src/entidades/patrocínio"; //🗡️
+import ParticipaçãoMineração from "src/entidades/participação-mineração";
 
 
 
@@ -43,6 +44,33 @@ export default class ServiçosGerenteMineradora {
     }
   };
 
+
+  static async buscarParticipaçõesMineraçãoPatrocínio(request, response) {
+    try {
+      const id_patrocínio = request.params.id_patrocínio;
+      const participaçõesMineração = await ParticipaçãoMineração.find({ where: { patrocínio: { id: id_patrocínio } },
+      relations: ["gerenteTecnologia", "gerenteTecnologia.usuário", "Patrocínio"]});
+      return response.json(participaçõesMineração);
+    } catch (error) { return response.status(500).json(
+    { erro: "Erro BD : buscarParticipaçõesMineraçãoPatrocínio" }); }
+  };
+
+  static async buscarParticipaçõesMineraçãoGerenteMineradora(request, response) {
+    try {
+      const cpf = request.params.cpf;
+      const cpf_encriptado = md5(cpf);
+      
+      const participaçõesMineração = await ParticipaçãoMineração.createQueryBuilder("p")
+        .leftJoinAndSelect("p.gerente_mineradora", "gm")
+        .leftJoinAndSelect("gm.usuário", "u")
+        .where("u.cpf = :cpf", { cpf: cpf_encriptado })
+        .getMany();
+      
+      return response.json(participaçõesMineração);
+    } catch (error) { 
+      return response.status(500).json({ erro: "Erro BD : buscarParticipaçõesMineraçãoGerenteMineradora" }); 
+    }
+  };
 
   static async alterarPatrocínio(request, response) {
     try {
