@@ -16,7 +16,7 @@ constructor() {}
   //🗡️ ------------------1 Alteração feita usando Gerente Mineradora ------------------- 🗡️
 static async cadastrarParticipaçãoMineração(request, response) {
   try {
-    const { título, categoria, área_atuação, data_início, descrição, resultado, cpf } = request.body;
+    const { título, categoria, área_atuação, data_início, descrição, resultado, cpf, id_patrocínio } = request.body;
     console.log("📥 Dados recebidos:", request.body);
     
 
@@ -31,6 +31,21 @@ static async cadastrarParticipaçãoMineração(request, response) {
 
     if (!gerente_tecnologia)
       return response.status(404).json({ erro: "Gerente tecnologia não encontrado." });
+
+    // Buscar o patrocínio para obter o gerente mineradora
+    let gerente_mineradora = null;
+    if (id_patrocínio) {
+      const patrocínio = await Patrocínio.findOne({
+        where: { id: id_patrocínio },
+        relations: ["gerentemineradora"]
+      });
+      console.log("🏢 Patrocínio encontrado:", patrocínio);
+      
+      if (patrocínio && patrocínio.gerentemineradora) {
+        gerente_mineradora = patrocínio.gerentemineradora;
+        console.log("⛏️ Gerente mineradora encontrado:", gerente_mineradora);
+      }
+    }
 
     const participaçõesMineração = await ParticipaçãoMineração.find({
       where: { gerente_tecnologia, título }
@@ -47,12 +62,30 @@ static async cadastrarParticipaçãoMineração(request, response) {
       data_início: new Date(data_início),
       descrição,
       resultado,
-      gerente_tecnologia
+      gerente_tecnologia,
+      gerente_mineradora
     });
     console.log("🧱 Nova participação:", nova);
 
     await nova.save();
     console.log("✅ Participação salva com sucesso!");
+
+    // Se um patrocínio foi informado, associe-o à participação recém-criada.
+    if (id_patrocínio) {
+      try {
+        const pat = await Patrocínio.findOne({ where: { id: id_patrocínio } });
+        if (pat) {
+          // A entidade Patrocínio possui a propriedade 'participações_mineração' que referencia a participação
+          pat.participações_mineração = nova as any; // tipagem flexível
+          await pat.save();
+          console.log(`🔗 Patrocínio (id=${id_patrocínio}) associado à participação (id=${nova.id})`);
+        } else {
+          console.warn(`⚠️ Patrocínio com id=${id_patrocínio} não encontrado para associar.`);
+        }
+      } catch (err) {
+        console.error(`❌ Erro ao associar patrocínio id=${id_patrocínio}:`, err?.message || err);
+      }
+    }
 
     return response.json({ sucesso: true });
   } catch (error) {

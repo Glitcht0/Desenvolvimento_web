@@ -41,8 +41,11 @@ import {
 export default function CadastrarParticipaçãoMineração() {
   const referênciaToast = useRef(null);
   const { usuárioLogado } = useContext(ContextoUsuário);
-  const { participaçãoMineraçãoConsultado, PatrocínioSelecionada, setPatrocínioParticipaçãoMineração, setPatocínioConsultada} = useContext(ContextoGerenteTecnologia);
-
+  const { 
+    participaçãoMineraçãoConsultado, 
+    PatrocínioSelecionada, 
+    setPatrocínioConsultada // Removido o 'setPatrocínioParticipaçãoMineração'
+  } = useContext(ContextoGerenteTecnologia);
   const [dados, setDados] = useState({
     id_patrocínio: PatrocínioSelecionada?.id || "",
     título: PatrocínioSelecionada?.título || "",
@@ -79,10 +82,24 @@ export default function CadastrarParticipaçãoMineração() {
 
 
   function consultarPatrocínioParticipaçãoMineração() {
-  setPatocínioConsultada(null);
-  setPatrocínioParticipaçãoMineração(participaçãoMineraçãoConsultado?.patrocínio);
-  navegar("../consultar-patrocínio");
-  };
+    // Primeiro, logar o objeto da participação para debug
+    console.log("🔍 Participação atual (consultarPatrocínio):", participaçãoMineraçãoConsultado);
+
+    // Tentar várias propriedades: 'patrocínio' (singular) ou 'patrocínios' (array)
+    const patrocinioSingular = participaçãoMineraçãoConsultado?.patrocínio;
+    const patrocinioPlural = participaçãoMineraçãoConsultado?.patrocínios;
+    const patrocinio = patrocinioSingular || (Array.isArray(patrocinioPlural) && patrocinioPlural.length > 0 ? patrocinioPlural[0] : null);
+
+    if (patrocinio) {
+      console.log("🔎 Patrocínio encontrado:", patrocinio);
+      setPatrocínioConsultada(patrocinio);
+      navegar("../consultar-patrocinio");
+    } else {
+      console.warn("⚠️ Nenhum patrocínio associado encontrado para esta participação.");
+      mostrarToast(referênciaToast, "Esta participação não possui um patrocínio associado.", "info");
+      setPatrocínioConsultada(null);
+    }
+};
 
   function pesquisarPatrocínios() {
     navegar("../pesquisar-patrocinios");
@@ -95,7 +112,11 @@ export default function CadastrarParticipaçãoMineração() {
   async function cadastrarParticipação() {
     if (validarCampos()) {
       try {
-        await serviçoCadastrarParticipaçãoMineração({ ...dados, cpf: usuárioLogado.cpf });
+        await serviçoCadastrarParticipaçãoMineração({ 
+          ...dados, 
+          cpf: usuárioLogado.cpf,
+          id_patrocínio: PatrocínioSelecionada?.id
+        });
         mostrarToast(referênciaToast, "Participação cadastrada com sucesso!", "sucesso");
       } catch (error) {
         mostrarToast(referênciaToast, error.response.data.erro, "erro");

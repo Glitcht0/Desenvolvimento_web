@@ -58,7 +58,10 @@ export default class ServiçosGerenteMineradora {
   static async buscarParticipaçõesMineraçãoGerenteMineradora(request, response) {
     try {
       const cpf = request.params.cpf;
+      console.log("🔵 [buscarParticipaçõesMineraçãoGerenteMineradora] CPF recebido:", cpf);
+      
       const cpf_encriptado = md5(cpf);
+      console.log("🟡 [buscarParticipaçõesMineraçãoGerenteMineradora] CPF encriptado:", cpf_encriptado);
       
       const participaçõesMineração = await ParticipaçãoMineração.createQueryBuilder("p")
         .leftJoinAndSelect("p.gerente_mineradora", "gm")
@@ -66,9 +69,13 @@ export default class ServiçosGerenteMineradora {
         .where("u.cpf = :cpf", { cpf: cpf_encriptado })
         .getMany();
       
+      console.log("🟢 [buscarParticipaçõesMineraçãoGerenteMineradora] Resultados encontrados:", participaçõesMineração.length);
+      console.log("📦 [buscarParticipaçõesMineraçãoGerenteMineradora] Dados:", participaçõesMineração);
+      
       return response.json(participaçõesMineração);
     } catch (error) { 
-      return response.status(500).json({ erro: "Erro BD : buscarParticipaçõesMineraçãoGerenteMineradora" }); 
+      console.error("🔴 [buscarParticipaçõesMineraçãoGerenteMineradora] Erro:", error.message);
+      return response.status(500).json({ erro: "Erro BD : buscarParticipaçõesMineraçãoGerenteMineradora", detalhe: error.message }); 
     }
   };
 

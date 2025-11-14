@@ -20,5 +20,6 @@ RotasGerenteMineradora.delete("/patrocinio/:id", verificarToken, verificarPerfil
 RotasGerenteMineradora.get("/patrocinio/gerente-mineradora/:cpf", verificarToken, verificarPerfilGerenteMineradora, ServiçosGerenteMineradora.buscarPatrocínioGerenteMineradora);
 RotasGerenteMineradora.get("/patrocinio/areas-atuacao/", verificarToken, verificarPerfilGerenteMineradora, ServiçosGerenteMineradora.buscarÁreasAtuaçãoPatrocínio);
 RotasGerenteMineradora.get("/ParticipaçõesMineração/:id_patrocínio", verificarToken, verificarPerfilGerenteMineradora,ServiçosGerenteMineradora.buscarParticipaçõesMineraçãoPatrocínio);
+RotasGerenteMineradora.get("/participacao-mineracao/gerente-mineradora/:cpf", verificarToken, verificarPerfilGerenteMineradora, ServiçosGerenteMineradora.buscarParticipaçõesMineraçãoGerenteMineradora);
 
  //🗡️ ------------------------------------- 🗡️
