@@ -4,6 +4,7 @@ import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
+import { Dropdown } from "primereact/dropdown";
 import { Toast } from "primereact/toast";
 import { Checkbox } from "primereact/checkbox";
 
@@ -40,7 +41,8 @@ export default function CadastrarPatrocínio() {
 
   const [dados, setDados] = useState({
     necessidade_bolsa: patrocínioConsultada?.necessidade_bolsa || false, // <-- Mude para 'false'
-    justificativa: patrocínioConsultada?.justificativa || ""
+    justificativa: patrocínioConsultada?.justificativa || "",
+    categoria_participacao: patrocínioConsultada?.categoria_participacao || null
     });
   const [erros, setErros] = useState({});
   const navegar = useNavigate();
@@ -53,8 +55,8 @@ export default function CadastrarPatrocínio() {
   }
 
   function validarCampos() {
-    const { necessidade_bolsa, justificativa } = dados;
-    const errosCampos = validarCamposObrigatórios({ necessidade_bolsa, justificativa });
+    const { necessidade_bolsa, justificativa, categoria_participacao } = dados;
+    const errosCampos = validarCamposObrigatórios({ necessidade_bolsa, justificativa, categoria_participacao });
     setErros(errosCampos);
     return checarListaVazia(errosCampos);
   }
@@ -123,6 +125,21 @@ export default function CadastrarPatrocínio() {
     <div className={estilizarFlex()}>
       <Toast ref={referênciaToast} onHide={retornarAdministrarPatrocínios} position="bottom-center" />
       <Card title={títuloFormulário()} className={estilizarCard(usuárioLogado.cor_tema)}>
+        {/* Categoria / Tipo de participação */}
+        <div className={estilizarDivCampo()}>
+          <label className={estilizarLabel(usuárioLogado.cor_tema)}>Categoria (Tipo):</label>
+          <Dropdown
+            value={dados.categoria_participacao}
+            options={[
+              { label: "Mineração Lunar", value: "MineraçãoLunar" },
+              { label: "Extração de Rochas", value: "ExtraçãoDeRochas" },
+              { label: "Extração de Hélio-3", value: "ExtraçãoDeHelio3" }
+            ]}
+            onChange={(e) => setDados({ ...dados, categoria_participacao: e.value })}
+            placeholder="Selecione a categoria"
+          />
+          <MostrarMensagemErro mensagem={erros.categoria_participacao} />
+        </div>
         <div className={estilizarDivCampo()}>
           <label className={estilizarLabel(usuárioLogado.cor_tema)}>Necessidade de Bolsa*:</label>
           <Checkbox

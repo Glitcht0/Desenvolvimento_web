@@ -31,12 +31,6 @@ import {
 } from "../../utilitários/estilos";
 
 
-
-
-
-
-
-
 export default function AdministrarParticipaçõesMineração() {
     const referênciaToast = useRef(null);
     const navegar = useNavigate();
@@ -47,12 +41,19 @@ export default function AdministrarParticipaçõesMineração() {
 
     const [listaParticipaçõesMineração, setListaParticipaçõesMineração] = useState([]);
 
-    // Código novo e CORRETO
+    // Opções para filtros
     const opçõesCategoria = [
         { label: "Extração", value: "Extração" },
         { label: "Exploração", value: "Exploração" },
         { label: "Consultoria", value: "Consultoria" },
         { label: "Pesquisa Mineral", value: "Pesquisa Mineral" }
+    ];
+
+    // --- 1. ADICIONADO OPÇÕES DE RESULTADO ---
+    const opçõesResultado = [
+        { label: "Sucesso", value: "Sucesso" },
+        { label: "Parcial", value: "Parcial" },
+        { label: "Falha", value: "Falha" }
     ];
 
     // Navegar para a página inicial
@@ -89,7 +90,7 @@ export default function AdministrarParticipaçõesMineração() {
         );
     }
 
-    // Dropdown de categorias
+    // Dropdown de categorias (Já existia)
     function DropdownÁreaTemplate(opções) {
         function alterarFiltroDropdown(event) {
             return opções.filterCallback(event.value, opções.index);
@@ -105,9 +106,23 @@ export default function AdministrarParticipaçõesMineração() {
             />
         );
     }
+ 
+    // --- 2. ADICIONADA FUNÇÃO PARA FILTRO DE RESULTADO ---
+    function DropdownResultadoTemplate(opções) {
+        function alterarFiltroDropdown(event) {
+            return opções.filterCallback(event.value, opções.index);
+        }
 
-    
-  
+        return (
+            <Dropdown
+                value={opções.value}
+                options={opçõesResultado}
+                placeholder="Selecione"
+                onChange={alterarFiltroDropdown}
+                showClear
+            />
+        );
+    }
 
     // Buscar interesses do gerente tecnologia ao carregar o componente
     useEffect(() => {
@@ -137,16 +152,10 @@ export default function AdministrarParticipaçõesMineração() {
         buscarParticipaçõesMineração();
         return () => (desmontado = true);
     }, [usuárioLogado.cpf]);
-
-
-
-
-
     
     return (
         <div className={estilizarFlex()}>
             <Toast ref={referênciaToast} position="bottom-center" />
-            {/* Corrigido: Título do Card */}
             <Card title="Administrar Participações de Mineração" className={estilizarCard(usuárioLogado.cor_tema)}>
                 <DataTable
                     dataKey="id"
@@ -176,6 +185,23 @@ export default function AdministrarParticipaçõesMineração() {
                         showFilterOperator={false}
                         headerClassName={estilizarColumnHeader(usuárioLogado.cor_tema)}
                     />
+
+                    {/* --- 3. ADICIONADA COLUNA CATEGORIA --- */}
+                    <Column
+                        field="categoria"
+                        header="Categoria"
+                        sortable
+                        filter
+                        filterMatchMode="equals"
+                        filterElement={DropdownÁreaTemplate}
+                        showClearButton={false}
+                        showFilterOperator={false}
+                        showFilterMatchModes={false}
+                        filterMenuClassName={estilizarFilterMenu()}
+                        showFilterMenuOptions={false}
+                        headerClassName={estilizarColumnHeader(usuárioLogado.cor_tema)}
+                    />
+
                     <Column
                         field="área_atuação"
                         header="Área de Atuação"
@@ -184,6 +210,23 @@ export default function AdministrarParticipaçõesMineração() {
                         showFilterOperator={false}
                         headerClassName={estilizarColumnHeader(usuárioLogado.cor_tema)}
                     />
+
+                    {/* --- 4. ADICIONADA COLUNA RESULTADO --- */}
+                    <Column
+                        field="resultado"
+                        header="Resultado"
+                        sortable
+                        filter
+                        filterMatchMode="equals"
+                        filterElement={DropdownResultadoTemplate}
+                        showClearButton={false}
+                        showFilterOperator={false}
+                        showFilterMatchModes={false}
+                        filterMenuClassName={estilizarFilterMenu()}
+                        showFilterMenuOptions={false}
+                        headerClassName={estilizarColumnHeader(usuárioLogado.cor_tema)}
+                    />
+
                     <Column
                         field="data_início"
                         header="Data de Início"
@@ -191,6 +234,8 @@ export default function AdministrarParticipaçõesMineração() {
                         headerClassName={estilizarColumnHeader(usuárioLogado.cor_tema)}
                         body={(rowData) => new Date(rowData.data_início).toLocaleDateString()}
                     />
+                    
+                    {/* Descrição é muito longa para filtro, talvez remover? */}
                     <Column
                         field="descrição"
                         header="Descrição"

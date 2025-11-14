@@ -14,6 +14,9 @@ export default class Patrocínio extends BaseEntity {
     @Column()
     justificativa: string;
 
+    @Column({ nullable: true })
+    categoria_participacao: string;
+
     @CreateDateColumn()
     data_manifestação: Date;
 

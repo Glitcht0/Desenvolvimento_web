@@ -7,6 +7,7 @@ import { Divider } from "primereact/divider";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Toast } from "primereact/toast";
+import { Dropdown } from "primereact/dropdown"; // 1. IMPORTAR O DROPDOWN
 
 import ContextoUsuário from "../../contextos/contexto-usuário";
 import ContextoGerenteTecnologia from "../../contextos/contexto-gerente-tecnologia";
@@ -44,16 +45,34 @@ export default function CadastrarParticipaçãoMineração() {
   const { 
     participaçãoMineraçãoConsultado, 
     PatrocínioSelecionada, 
-    setPatrocínioConsultada // Removido o 'setPatrocínioParticipaçãoMineração'
+    setPatrocínioConsultada 
   } = useContext(ContextoGerenteTecnologia);
+
+  // 2. DEFINIR AS OPÇÕES (COM BASE NA SUA ENTIDADE)
+  const opçõesCategoria = [
+    { label: "Extração", value: "Extração" },
+    { label: "Exploração", value: "Exploração" },
+    { label: "Consultoria", value: "Consultoria" },
+    { label: "Pesquisa Mineral", value: "Pesquisa Mineral" }
+  ];
+
+  const opçõesResultado = [
+    { label: "Sucesso", value: "Sucesso" },
+    { label: "Parcial", value: "Parcial" },
+    { label: "Falha", value: "Falha" }
+  ];
+
+  // 3. ADICIONAR CAMPOS AO ESTADO
   const [dados, setDados] = useState({
     id_patrocínio: PatrocínioSelecionada?.id || "",
-    título: PatrocínioSelecionada?.título || "",
+    título: participaçãoMineraçãoConsultado?.título || "", // Título da participação
     necessidade_bolsa: participaçãoMineraçãoConsultado?.necessidade_bolsa || false,
     justificativa: participaçãoMineraçãoConsultado?.justificativa || "",
     área_atuação: participaçãoMineraçãoConsultado?.área_atuação || "",
     data_início: participaçãoMineraçãoConsultado?.data_início || "",
     descrição: participaçãoMineraçãoConsultado?.descrição || "",
+    categoria: participaçãoMineraçãoConsultado?.categoria || "", // <-- ADICIONADO
+    resultado: participaçãoMineraçãoConsultado?.resultado || ""  // <-- ADICIONADO
   });
 
 
@@ -61,14 +80,23 @@ export default function CadastrarParticipaçãoMineração() {
   const navegar = useNavigate();
 
   function alterarEstado(event) {
-    const chave = event.target.name || event.value;
-    const valor = event.target.value || event.checked;
+    // Esta função já está correta para lidar com Dropdown também
+    const chave = event.target.name; 
+    const valor = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
     setDados({ ...dados, [chave]: valor });
   }
 
+  // 4. ADICIONAR CAMPOS À VALIDAÇÃO
   function validarCampos() {
-    const { título, justificativa } = dados;
-    const errosCamposObrigatórios = validarCamposObrigatórios({ título, justificativa });
+    const { título, justificativa, categoria, resultado, área_atuação, data_início } = dados; // <-- ADICIONADOS
+    const errosCamposObrigatórios = validarCamposObrigatórios({ 
+        título, 
+        justificativa, 
+        categoria, 
+        resultado,
+        área_atuação,
+        data_início 
+    });
     setErros(errosCamposObrigatórios);
     return checarListaVazia(errosCamposObrigatórios);
   }
@@ -82,13 +110,13 @@ export default function CadastrarParticipaçãoMineração() {
 
 
   function consultarPatrocínioParticipaçãoMineração() {
-    // Primeiro, logar o objeto da participação para debug
     console.log("🔍 Participação atual (consultarPatrocínio):", participaçãoMineraçãoConsultado);
 
-    // Tentar várias propriedades: 'patrocínio' (singular) ou 'patrocínios' (array)
-    const patrocinioSingular = participaçãoMineraçãoConsultado?.patrocínio;
-    const patrocinioPlural = participaçãoMineraçãoConsultado?.patrocínios;
-    const patrocinio = patrocinioSingular || (Array.isArray(patrocinioPlural) && patrocinioPlural.length > 0 ? patrocinioPlural[0] : null);
+    // O seu backend (buscarParticipaçõesMineraçãoGerenteTecnologia) agora retorna 'patrocínios' (plural/array)
+    const patrocinioArray = participaçãoMineraçãoConsultado?.patrocínios;
+    
+    // Pega o primeiro patrocínio do array, se existir
+    const patrocinio = (Array.isArray(patrocinioArray) && patrocinioArray.length > 0) ? patrocinioArray[0] : null;
 
     if (patrocinio) {
       console.log("🔎 Patrocínio encontrado:", patrocinio);
@@ -173,26 +201,29 @@ export default function CadastrarParticipaçãoMineração() {
     else return "Cadastrar Participação";
   }
 
-  function PatrocínioInputText() {
-    if (PatrocínioSelecionada?.título) {
+ function PatrocínioInputText() {
+    // 1. Verifica o patrocínio selecionado (quando você clica em "Selecionar/Substituir")
+    if (PatrocínioSelecionada?.justificativa) {
       return (
         <InputText
-          name="título_patrocínio"
-          className={estilizarInputText(erros.título_patrocínio, 400, usuárioLogado.cor_tema)}
-          value={PatrocínioSelecionada?.título}
+          name="nome_patrocínio" 
+          className={estilizarInputText(erros.nome_patrocínio, 400, usuárioLogado.cor_tema)}
+          value={PatrocínioSelecionada?.justificativa} 
           disabled
         />
       );
-    } else if (participaçãoMineraçãoConsultado?.patrocínio?.título) {
+    // 2. Verifica o patrocínio de uma participação existente (quando você está editando)
+    //    Ajustado para o novo formato de 'patrocínios' (array)
+    } else if (participaçãoMineraçãoConsultado?.patrocínios && participaçãoMineraçãoConsultado.patrocínios.length > 0) {
       return (
         <InputText
-          name="título_patrocínio"
-          className={estilizarInputText(erros.título_patrocínio, 400, usuárioLogado.cor_tema)}
-          value={participaçãoMineraçãoConsultado?.patrocínio?.título}
+          name="nome_patrocínio"
+          className={estilizarInputText(erros.nome_patrocínio, 400, usuárioLogado.cor_tema)}
+          value={participaçãoMineraçãoConsultado.patrocínios[0].justificativa} // Pega do primeiro patrocínio
           disabled
         />
       );
-    } else return null;
+    } else return null; // Retorna nulo se nenhum patrocínio for encontrado
   }
 
   function BotãoSelecionar() {
@@ -212,7 +243,20 @@ export default function CadastrarParticipaçãoMineração() {
           onClick={pesquisarPatrocínios}
         />
       );
-    } else return null;
+    // Se estiver editando, não mostre "Selecionar" ou "Substituir",
+    // o patrocínio é visto pelo botão "Patrocínio"
+    } else if (participaçãoMineraçãoConsultado) {
+        return null;
+    }
+    
+    // Fallback caso nenhuma condição acima seja atendida (modo de cadastro inicial)
+    return (
+        <Button
+            className={estilizarBotão()}
+            label="Selecionar"
+            onClick={pesquisarPatrocínios}
+        />
+    );
   }
 
   return (
@@ -241,7 +285,6 @@ export default function CadastrarParticipaçãoMineração() {
             checked={dados.necessidade_bolsa}
             className={estilizarCheckbox()}
             onChange={alterarEstado}
-            autoResize
           />
         </div>
 
@@ -258,6 +301,24 @@ export default function CadastrarParticipaçãoMineração() {
           />
           <MostrarMensagemErro mensagem={erros.título} />
         </div>
+
+        {/* 5. ADICIONAR O JSX DO DROPDOWN DE CATEGORIA */}
+        <div className={estilizarDivCampo()}>
+          <label className={estilizarLabel(usuárioLogado.cor_tema)}>
+            Categoria*:
+          </label>
+          <Dropdown
+            name="categoria"
+            value={dados.categoria}
+            options={opçõesCategoria}
+            onChange={alterarEstado}
+            placeholder="Selecione uma categoria"
+            // Você pode precisar de um 'estilizarDropdown' ou usar o 'estilizarInputText'
+            className={estilizarInputText(erros.categoria, 400, usuárioLogado.cor_tema)} 
+          />
+          <MostrarMensagemErro mensagem={erros.categoria} />
+        </div>
+
 
         <div className={estilizarDivCampo()}>
           <label className={estilizarLabel(usuárioLogado.cor_tema)}>
@@ -288,6 +349,22 @@ export default function CadastrarParticipaçãoMineração() {
           <MostrarMensagemErro mensagem={erros.descrição} />
         </div>
 
+        {/* 5. ADICIONAR O JSX DO DROPDOWN DE RESULTADO */}
+        <div className={estilizarDivCampo()}>
+          <label className={estilizarLabel(usuárioLogado.cor_tema)}>
+            Resultado*:
+          </label>
+          <Dropdown
+            name="resultado"
+            value={dados.resultado}
+            options={opçõesResultado}
+            onChange={alterarEstado}
+            placeholder="Selecione um resultado"
+            className={estilizarInputText(erros.resultado, 400, usuárioLogado.cor_tema)} 
+          />
+          <MostrarMensagemErro mensagem={erros.resultado} />
+        </div>
+
 
         <div className={estilizarDivCampo()}>
           <label className={estilizarLabel(usuárioLogado.cor_tema)}>
@@ -312,7 +389,7 @@ export default function CadastrarParticipaçãoMineração() {
           <InputTextarea
             name="justificativa"
             value={dados.justificativa}
-            className={estilizarInputTextarea(erros.descrição, usuárioLogado.cor_tema)}
+            className={estilizarInputTextarea(erros.justificativa, usuárioLogado.cor_tema)}
             onChange={alterarEstado}
             autoResize
             cols={40}

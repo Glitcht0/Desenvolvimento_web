@@ -23,7 +23,7 @@ export default class ServiçosGerenteMineradora {
 
   static async cadastrarPatrocínio(request, response) {
     try {
-      const { necessidade_bolsa, justificativa, cpf } = request.body;
+  const { necessidade_bolsa, justificativa, categoria_participacao, cpf } = request.body;
 
       const cpf_encriptado = md5(cpf);
       const gerente = await GerenteMineradora.findOne({ where: { usuário: cpf_encriptado }, relations: ["usuário"] });
@@ -32,10 +32,8 @@ export default class ServiçosGerenteMineradora {
       await Patrocínio.create({
         necessidade_bolsa,
         justificativa,
+        categoria_participacao,
         gerentemineradora: gerente
-        
-        
-        
       }).save();
 
       return response.json();
@@ -59,33 +57,45 @@ export default class ServiçosGerenteMineradora {
     try {
       const cpf = request.params.cpf;
       console.log("🔵 [buscarParticipaçõesMineraçãoGerenteMineradora] CPF recebido:", cpf);
-      
+
       const cpf_encriptado = md5(cpf);
       console.log("🟡 [buscarParticipaçõesMineraçãoGerenteMineradora] CPF encriptado:", cpf_encriptado);
-      
+
       const participaçõesMineração = await ParticipaçãoMineração.createQueryBuilder("p")
         .leftJoinAndSelect("p.gerente_mineradora", "gm")
         .leftJoinAndSelect("gm.usuário", "u")
+
+        // --- ADIÇÃO ---
+        .leftJoinAndSelect("p.gerente_tecnologia", "gt")
+        .leftJoinAndSelect("gt.usuário", "ut")
+        // --- FIM ---
+
         .where("u.cpf = :cpf", { cpf: cpf_encriptado })
         .getMany();
-      
+
       console.log("🟢 [buscarParticipaçõesMineraçãoGerenteMineradora] Resultados encontrados:", participaçõesMineração.length);
       console.log("📦 [buscarParticipaçõesMineraçãoGerenteMineradora] Dados:", participaçõesMineração);
-      
+
       return response.json(participaçõesMineração);
-    } catch (error) { 
+
+    } catch (error) {
       console.error("🔴 [buscarParticipaçõesMineraçãoGerenteMineradora] Erro:", error.message);
-      return response.status(500).json({ erro: "Erro BD : buscarParticipaçõesMineraçãoGerenteMineradora", detalhe: error.message }); 
+      return response.status(500).json({
+        erro: "Erro BD : buscarParticipaçõesMineraçãoGerenteMineradora",
+        detalhe: error.message
+      });
     }
   };
 
+
   static async alterarPatrocínio(request, response) {
     try {
-      const { id, necessidade_bolsa, justificativa } = request.body;
+      const { id, necessidade_bolsa, justificativa, categoria_participacao } = request.body;
 
       await Patrocínio.update(id, {
         necessidade_bolsa,
-        justificativa
+        justificativa,
+        categoria_participacao
         // data_manifestação é automática, relacionamentos você não altera aqui
       });
 

@@ -8,10 +8,8 @@ import { Divider } from "primereact/divider";
 import { Dropdown } from "primereact/dropdown";
 import { TriStateCheckbox } from "primereact/tristatecheckbox";
 
-import ContextoGerenteMineradora from "../../contextos/contexto-gerente-mineradora";
-
 // 🔸 Contextos
-
+import ContextoGerenteMineradora from "../../contextos/contexto-gerente-mineradora";
 import ContextoUsuário from "../../contextos/contexto-usuário";
 
 // 🔸 Serviços e utilitários
@@ -37,35 +35,16 @@ import {
 export default function AdministrarPatrocínios() {
   const referênciaToast = useRef(null);
   const { usuárioLogado } = useContext(ContextoUsuário);
-  console.log(ContextoGerenteMineradora);
   const { patrocínioConsultada, setPatrocínioConsultada } = useContext(ContextoGerenteMineradora);
   const [listaPatrocínios, setListaPatrocínios] = useState([]);
   const navegar = useNavigate();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // 🔸 Opções de estilos de logo para o filtro
-  const opçõesEstiloLogo = [
-    { label: "minimalista", value: "minimalista" },
-    { label: "tipográfico", value: "tipográfico" },
-    { label: "vintage", value: "vintage" },
-    { label: "abstrato", value: "abstrato" },
-    { label: "corporativo", value: "corporativo" },
-    { label: "futurista", value: "futurista" },
-    { label: "orgânico", value: "orgânico" },
-    { label: "mascote", value: "mascote" }
+  // 🔸 Opções de Categoria para o filtro (CORRIGIDO)
+  // (Valores baseados no seu arquivo cadastrar-patrocínio.jsx)
+  const opçõesCategoria = [
+    { label: "Mineração Lunar", value: "MineraçãoLunar" },
+    { label: "Extração de Rochas", value: "ExtraçãoDeRochas" },
+    { label: "Extração de Hélio-3", value: "ExtraçãoDeHelio3" }
   ];
 
   // 🔸 Retorna à página inicial
@@ -73,7 +52,7 @@ export default function AdministrarPatrocínios() {
     navegar("/pagina-inicial");
   }
 
-  // 🔸 Adiciona novo design de logo
+  // 🔸 Adiciona novo patrocínio
   function adicionarPatrocínio() {
     setPatrocínioConsultada(null);
     navegar("../cadastrar-patrocinio");
@@ -93,15 +72,15 @@ export default function AdministrarPatrocínios() {
           usuárioLogado.cor_tema,
           patrocínioConsultada?.id === patrocínio.id
         )}
-        tooltip="Consultar DesignLogo"
+        tooltip="Consultar Patrocínio"
         tooltipOptions={{ position: "top" }}
         onClick={consultar}
       />
     );
   }
 
-  // 🔸 Template para filtro Dropdown (estilo da logo)
-  function DropdownÁreaTemplate(opções) {
+  // 🔸 Template para filtro Dropdown (Categoria) (CORRIGIDO)
+  function DropdownCategoriaTemplate(opções) {
     function alterarFiltroDropdown(event) {
       return opções.filterCallback(event.value, opções.index);
     }
@@ -109,7 +88,7 @@ export default function AdministrarPatrocínios() {
     return (
       <Dropdown
         value={opções.value}
-        options={opçõesEstiloLogo}
+        options={opçõesCategoria} // <-- Usando a lista correta
         placeholder="Selecione"
         onChange={alterarFiltroDropdown}
         showClear
@@ -117,19 +96,22 @@ export default function AdministrarPatrocínios() {
     );
   }
 
-// 🔸 Exibe “Sim” ou “Não” na tabela conforme booleano
+  // 🔸 Exibe “Sim” ou “Não” na tabela conforme booleano
   function BooleanBodyTemplate(patrocínio) {
-    return patrocínio.necessidade_bolsa ? "Sim" : "Não"; // <-- Mude para "necessidade_bolsa"
+    return patrocínio.necessidade_bolsa ? "Sim" : "Não";
   }
+
   // 🔸 Template para filtro booleano (tri-state)
   function BooleanFilterTemplate(opções) {
     function alterarFiltroTriState(event) {
       return opções.filterCallback(event.value);
     }
 
+    // O label aqui estava "Concorrendo ao contrato:",
+    // mudei para "Necessidade de Bolsa:" para ficar consistente
     return (
       <div>
-        <label>Concorrendo ao contrato:</label>
+        <label>Necessidade de Bolsa:</label>
         <TriStateCheckbox
           className={estilizarTriStateCheckbox(usuárioLogado?.cor_tema)}
           value={opções.value}
@@ -139,23 +121,23 @@ export default function AdministrarPatrocínios() {
     );
   }
 
-  // 🔸 Busca os designs de logos do empresário
+  // 🔸 Busca os patrocínios do gerente mineradora
   useEffect(() => {
     let desmontado = false;
 
-    async function buscarPatrocíniosEmpresário() {
+    async function buscarPatrocíniosGerente() {
       try {
         const response = await serviçoBuscarPatrocínioGerenteMineradora(usuárioLogado.cpf);
         if (!desmontado && response.data) {
           setListaPatrocínios(response.data);
         }
       } catch (error) {
-        const erro = error.response.data.erro;
+        const erro = error.response?.data?.erro;
         if (erro) mostrarToast(referênciaToast, erro, "error");
       }
     }
 
-    buscarPatrocíniosEmpresário();
+    buscarPatrocíniosGerente();
     return () => (desmontado = true);
   }, [usuárioLogado.cpf]);
 
@@ -188,15 +170,15 @@ export default function AdministrarPatrocínios() {
 
           {/* Coluna: Nome do Gerente */}
           <Column
-            field="gerentemineradora.usuário.nome" // <-- Caminho para o nome
+            field="gerentemineradora.usuário.nome"
             header="Nome do Gerente"
             filter
             showFilterOperator={false}
             headerClassName={estilizarColumnHeader(usuárioLogado.cor_tema)}
             sortable
           />
-          
-            {/* Coluna: Justificativa */}
+
+          {/* Coluna: Justificativa */}
           <Column
             field="justificativa"
             header="Justificativa"
@@ -205,12 +187,27 @@ export default function AdministrarPatrocínios() {
             headerClassName={estilizarColumnHeader(usuárioLogado.cor_tema)}
             sortable
           />
-          
 
-          {/* Coluna: Concorrendo ao contrato */}
+          {/* Coluna: Categoria (ADICIONADA) */}
           <Column
-            field="necessidade_bolsa" // <-- CORRETO
-            header="Necessidade de Bolsa" // <-- (Opcional) Mude o título para ficar igual
+            field="categoria_participacao"
+            header="Categoria"
+            sortable
+            filter
+            filterMatchMode="equals"
+            filterElement={DropdownCategoriaTemplate}
+            showClearButton={false}
+            showFilterOperator={false}
+            showFilterMatchModes={false}
+            filterMenuClassName={estilizarFilterMenu()}
+            showFilterMenuOptions={false}
+            headerClassName={estilizarColumnHeader(usuárioLogado.cor_tema)}
+          />
+
+          {/* Coluna: Necessidade de Bolsa */}
+          <Column
+            field="necessidade_bolsa"
+            header="Necessidade de Bolsa"
             filter
             showFilterOperator={false}
             headerClassName={estilizarColumnHeader(usuárioLogado.cor_tema)}

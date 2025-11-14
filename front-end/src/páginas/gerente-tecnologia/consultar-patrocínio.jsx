@@ -33,7 +33,8 @@ export default function ConsultarPatrocínio() {
   const dados = {
     gerente: PatrocínioConsultada?.gerentemineradora?.usuário?.nome || "",
     justificativa: PatrocínioConsultada?.justificativa || "",
-    necessidade_bolsa: PatrocínioConsultada?.necessidade_bolsa || false
+    necessidade_bolsa: PatrocínioConsultada?.necessidade_bolsa || false,
+    categoria: PatrocínioConsultada?.categoria_participacao || ""
   };
 
   function retornar() {
@@ -67,6 +68,12 @@ export default function ConsultarPatrocínio() {
         <div className={estilizarDivCampo()}>
           <label className={estilizarLabel(usuárioLogado.cor_tema)}>Necessita Bolsa:</label>
           <Checkbox name="necessidade_bolsa" checked={dados.necessidade_bolsa} disabled />
+        </div>
+
+        {/* Categoria / Tipo */}
+        <div className={estilizarDivCampo()}>
+          <label className={estilizarLabel(usuárioLogado.cor_tema)}>Categoria:</label>
+          <InputText name="categoria" value={dados.categoria} disabled />
         </div>
 
         <Divider className={estilizarDivider()} />
