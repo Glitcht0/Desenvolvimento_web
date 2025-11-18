@@ -24,8 +24,8 @@ import PesquisarPatrocínios from "../páginas/gerente-tecnologia/pesquisar-patr
 import ConsultarPatrocínio from "../páginas/gerente-tecnologia/consultar-patrocínio";
 
 
-import PesquisarParticipaçõesMinerações from "../páginas/gerente-mineradora/pesquisar-participação-mineração";
-import ConsultarParticipaçãoMineração from "../páginas/gerente-mineradora/consultar-interesse";
+import PesquisarParticipaçõesMinerações from "../páginas/gerente-mineradora/pesquisar-participações-mineração";
+import ConsultarParticipaçãoMineração from "../páginas/gerente-mineradora/consultar-participação-mineração";
 import ConsultarGerenteTenologia from "../páginas/gerente-mineradora/consultar-gerente-tecnologia";
 import ConsultarGerenteMineradora from "../páginas/gerente-tecnologia/consultar-gerente-mineradora";
 

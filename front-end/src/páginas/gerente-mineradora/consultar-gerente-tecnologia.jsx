@@ -30,7 +30,7 @@ export default function ConsultarGerenteTenologia() {
         email: gerenteTecnologiaInteressado?.usuário?.email
     };
     const navegar = useNavigate();
-    function retornarConsultarInteresse() { navegar("../consultar-interesse"); };
+    function retornarConsultarInteresse() { navegar("../consultar-participação-mineração"); };
 
 return (
     <div className={estilizarFlex()}>
